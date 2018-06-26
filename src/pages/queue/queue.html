@@ -1,0 +1,26 @@
+<!--
+  Generated template for the QueuePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>Queue</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item *ngFor="let client of clients" (click)="removeItem(client)">
+      <ion-avatar item-start>
+        <img src="assets/imgs/if_Male.png">
+      </ion-avatar>
+      <h2> {{client.name}} </h2>
+      <h3> {{client.age}} </h3>
+      <p>I've got enough on my plate as it is, and I...</p>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>
