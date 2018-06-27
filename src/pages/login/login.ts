@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CommonModule } from '@angular/common';
 import { TabsPage } from '../tabs/tabs';
+import { EmployeesPage } from '../employees/employees';
 import { Configuration } from '../../app/Configuration';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import 'rxjs/add/operator/catch';
@@ -22,16 +23,16 @@ import { Observable } from 'rxjs/Observable';
   templateUrl: 'login.html',
 })
 export class LoginPage {
+  //_configuration: Configuration;
   actionUrl: string;
   Username: string = "";
   Password: string = "";
   StoreId: string;
   ErrorMessage: string = "";
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
-    private _configuration: Configuration, private http: HttpClient
-  ) {
-    this.actionUrl = _configuration.Url;
+  constructor(public navCtrl: NavController, public navParams: NavParams, private http: HttpClient
+             ,private _configuration: Configuration) {
+    this.actionUrl = this._configuration.Url;
   }
 
   ionViewDidLoad() {
@@ -39,23 +40,20 @@ export class LoginPage {
   }
 
   loginClick() {
-    if ((this.Username != null && this.Username != "") && (this.Password != null && this.Password != "")) {
-      //console.log("POST");
+    // console.log("UserName =" + this.Username);
+    // console.log("Password =" + this.Password);
+    // console.log("url =" + this.actionUrl);
+    if (this.Username != null && this.Username != "") {
       let urlSearchParams = new URLSearchParams();
-
       urlSearchParams.append('username', 'admin');
       urlSearchParams.append('password', '');
       urlSearchParams.append('grant_type', 'password');
       let body = urlSearchParams.toString();
       try {
         this.http.post(this.actionUrl + "/Token",
-          //JSON.stringify({ Username: this.Username, Password: this.Password, StoreId: this._configuration.store }),
-          //JSON.stringify({ username: this.Username, password:this.Password,grant_type:'password'  }),
-          
           body,
           {
             headers: new HttpHeaders({
-              //'Content-Type': 'application/json', 'Accept': 'application/json'
               'Content-Type': 'application/x-www-form-urlencoded'
             })
           })
@@ -63,19 +61,23 @@ export class LoginPage {
 
           .subscribe(
             res => {
-              // const loginResponseObj = <LoginResponse>res;
-              console.log("in post response");
+              //console.log("in post response");
               const loginResponseObj = <LoginResponse>res;
               const access_token = loginResponseObj.access_token;
               const userName = loginResponseObj.userName;
-              //console.log(myaccT);
-              var TOKEN = loginResponseObj.access_token;
+              console.log(loginResponseObj);
+
+              this._configuration.Token = loginResponseObj.access_token;
               var UserName = loginResponseObj.userName;
               var IsAuthenticated = true;
 
-              //set token to cookie
-              // this.cookieService.set("TOKEN", AppDef.TOKEN);
-              this.navCtrl.push(TabsPage);
+              //keep token to local storage
+              localStorage.setItem("token",loginResponseObj.access_token);
+              //console.log("token is" + TOKEN);
+              //console.log("user name is" + UserName);
+
+              //Redirect to Employees Page
+              this.navCtrl.push(EmployeesPage);
 
 
             }, error => { console.log(JSON.stringify(error)); }
@@ -92,6 +94,8 @@ export class LoginPage {
         this.ErrorMessage = Exception.ErrorMessage;
       }
     }
+
+
 
   }
 

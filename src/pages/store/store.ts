@@ -19,8 +19,8 @@ export class StorePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events) {
 
-    this.client = navParams.get('client');
-    this.clientsStore.push(this.client);
+    // this.client = navParams.get('client');
+    // this.clientsStore.push(this.client);
 
     events.subscribe('change-tab', (tab, client) => {
       
