@@ -13,11 +13,11 @@ import { StorePage } from '../store/store';
   templateUrl: 'tabs.html'
 })
 
- export class TabsPage {
-   @ViewChild(Tabs) tabs: Tabs;
-   //// tab1Root = HomePage;
-   tab1Root = QueuePage;
-   tab2Root = StorePage;
+export class TabsPage {
+  @ViewChild(Tabs) tabs: Tabs;
+  //// tab1Root = HomePage;
+  tab1Root = QueuePage;
+  tab2Root = StorePage;
   tab3Root = SelectClientPage;
 
   // tab4Root = HomePage;
@@ -26,7 +26,13 @@ import { StorePage } from '../store/store';
 
   storeListParam = { client: null };
 
+  //selectedEmp:string = "";
+
   constructor(public params: NavParams, public events: Events) {
+
+    //this.selectedEmp = params.get('empID');
+
+
     events.subscribe('change-tab', (tab, data) => {
       this.storeListParam.client = data;
       this.tabs.select(tab);

@@ -11,14 +11,21 @@ interface ErroResponse {
 
 
 interface Employee {
-    EmpId: string;
-    EmpName: string;
+    EmployeeCode: string;
+    EmployeeId: string;
+    EmployeeName: string;
 }
 
 interface ClientID {
-    Id: string;
+    QueueId: string;
+    ClienID: string;
     FirstName: string;
+    MiddleName: string;
     LastName: string;
+    Gender: string;
+    Height: string;     
+    Age: string;
+    CheckinTimeMinutes: string;
     Birthdate: string;
     ExpirationDate: string;
     LicenseNumber: string;
@@ -26,12 +33,9 @@ interface ClientID {
     City: string;
     Jurisdiction: string;
     Postal: string;
-    Gender: string;
-    Height: string;
     MobileNumber: string;
     LastCheckInDate: string;
     LastPurchaseAmount: string;
-    LastPurchaseDate: string;
 }
 
 

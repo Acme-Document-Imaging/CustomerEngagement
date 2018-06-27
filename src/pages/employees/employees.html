@@ -12,22 +12,16 @@
 
 </ion-header>
 
-
 <ion-content padding>
 
   <ion-item>
     <ion-label>Employees</ion-label>
-    <ion-select [(ngModel)]="employees" interface="popover">
-      <ion-option value="1">Emp1</ion-option>
-      <ion-option value="2">Emp2</ion-option>
-      <ion-option value="3">Emp3</ion-option>
-      <ion-option value="4">Emp4</ion-option>
-      <ion-option value="5">Emp5</ion-option>
-      <ion-option value="6">Emp6</ion-option>
+    <ion-select interface="popover" [(ngModel)]="listEmployees.Employee" (ionChange)="getSelectedValue(listEmployees.Employee);">
+      <ion-option *ngFor="let emp of listEmployees" [value]="emp.EmployeeId">{{emp.EmployeeName}}</ion-option>
     </ion-select>
   </ion-item>
-
-
-<p><button ion-button (click)="nextClick()">Next</button></p>
+  <p>
+    <button ion-button (click)="nextClick()">Next</button>
+  </p>
 
 </ion-content>
