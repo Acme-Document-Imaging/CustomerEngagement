@@ -83,6 +83,8 @@ export class QueuePage {
   // selectTab(index: number, client: any) {
   selectTab(index: number) {
     //debugger;
+    console.log("tab selected" + this.clientStore.lastCheckintime);
+    
     this.events.publish('change-tab', index, this.clientStore);
   }
 

@@ -1,3 +1,4 @@
+// import { Component, ViewChild, ChangeDetectionStrategy  } from '@angular/core';
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { Chart } from 'chart.js';
@@ -11,6 +12,7 @@ import { ClientPurchases } from '../../app/BL/ClientPurchases';
 
 @IonicPage()
 @Component({
+  //changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'page-select-client',
   templateUrl: 'select-client.html',
 })
