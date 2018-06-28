@@ -1,14 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { Chart } from 'chart.js';
+import { Configuration } from '../../app/BL/Configuraion';
+import { ClientID } from '../../app/BL/ClientID';
+import { ClientPurchases } from '../../app/BL/ClientPurchases';
 
+// import { DatePipe } from '@angular/common';
+// import { Pipe, PipeTransform } from '@angular/core';
 
-/**
- * Generated class for the SelectClientPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -18,23 +17,34 @@ import { Chart } from 'chart.js';
 export class SelectClientPage {
 
   @ViewChild('doughnutCanvas') doughnutCanvas;
-  doughnutChart : any;
+  doughnutChart: any;
 
-  public client : any = {firstName: null, lastName: null, birthDate: null, address: null, state: null,
-                zipCode: null, phone: null, lastPurchaseDate: null, lastVisitDate: null, lastPurchaseItem: null, tags: null  };
+  client: ClientID;
+  listPurchases: ClientPurchases;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.client.firstName = "Ralph";
-    this.client.lastName = "Bursolen";
-    this.client.birthDate = "22-10-2011";
-    this.client.address = "New york";
-    this.client.state = "NV";
-    this.client.zipCode = "123456";
-    this.client.phone = "0332-81380";
-    this.client.lastPurchaseDate = "23-06-2018";
-    this.client.lastVisitDate = "23-06-2018";
-    this.client.lastPurchaseItem = "Vehicle";
-    this.client.tags = "Tag1, Tag2, Tag3";
+
+  constructor(public navCtrl: NavController, public navParams: NavParams
+    , public events: Events, public _configuratoin: Configuration) {
+    debugger;
+    this.client = new ClientID();
+    this.listPurchases = new ClientPurchases();
+    if (_configuratoin.clientID != undefined && _configuratoin.clientID == null) {
+      this.client = _configuratoin.clientID;
+      if (this.client != undefined && this.client != null) {
+        this.listPurchases = _configuratoin.clientID.Purchases;
+
+      }
+    }
+
+    // else
+    // {
+    //   this.resetClient();
+    // }
+
+    events.subscribe('change-tab', (tab, client) => {
+      this.client = _configuratoin.clientID;
+    });
+
   }
 
   // ionViewDidLoad() {
@@ -67,7 +77,7 @@ export class SelectClientPage {
     //                 'rgba(153, 102, 255, 1)',
     //                 'rgba(255, 159, 64, 1)'
     //             ],
-                
+
     //             borderWidth: 1,
     //             hoverBackgroundColor: [
     //               "#ff3300",
@@ -93,36 +103,36 @@ export class SelectClientPage {
 
     this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
 
-        type: 'pie',
-        data: {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange", "Black"],
-            datasets: [{
-              label: '# of Votes',
-              data: [12, 19, 3, 5]
-              ,fillColor : "rgba(99,123,133,0.4)",
-              strokeColor : "rgba(220,220,220,1)",
-              pointColor : "rgba(220,220,220,1)",
-              pointStrokeColor : "#fff"
+      type: 'pie',
+      data: {
+        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange", "Black"],
+        datasets: [{
+          label: '# of Votes',
+          data: [12, 19, 3, 5]
+          , fillColor: "rgba(99,123,133,0.4)",
+          strokeColor: "rgba(220,220,220,1)",
+          pointColor: "rgba(220,220,220,1)",
+          pointStrokeColor: "#fff"
 
-                ,backgroundColor: [
-                    
-                    'rgb(255, 179, 179)',
-                    'rgb(201, 216, 242)',
-                    'rgb(255, 255, 153)',
-                    'rgb(179, 255, 179)',
-                    'rgb(236, 198, 236)',
-                    'rgb(255, 191, 128)'
-                ],
-                hoverBackgroundColor: [
-                    "#ff3300",
-                    "#1a75ff",
-                    "#ffff1a",
-                    "#00cc44",
-                    "#ac39ac",
-                    "#ff8c1a"
-                ]
-            }]
-        }
+          , backgroundColor: [
+
+            'rgb(255, 179, 179)',
+            'rgb(201, 216, 242)',
+            'rgb(255, 255, 153)',
+            'rgb(179, 255, 179)',
+            'rgb(236, 198, 236)',
+            'rgb(255, 191, 128)'
+          ],
+          hoverBackgroundColor: [
+            "#ff3300",
+            "#1a75ff",
+            "#ffff1a",
+            "#00cc44",
+            "#ac39ac",
+            "#ff8c1a"
+          ]
+        }]
+      }
 
     });
 
@@ -145,7 +155,7 @@ export class SelectClientPage {
     //                 pointBorderColor: "rgba(75,192,192,1)",
     //                 pointBackgroundColor: "#fff",
     //                 pointBorderWidth: 1,
-   //                 pointHoverRadius: 5,
+    //                 pointHoverRadius: 5,
     //                 pointHoverBackgroundColor: "rgba(75,192,192,1)",
     //                 pointHoverBorderColor: "rgba(220,220,220,1)",
     //                 pointHoverBorderWidth: 2,
@@ -159,8 +169,31 @@ export class SelectClientPage {
 
     // });
 
-}
+  }
 
+  //Function Reset client
+  resetClient() {
+    this.client.QueueId = "";
+    this.client.Id = "";
+    this.client.FirstName = "";
+    this.client.MiddleName = "";
+    this.client.LastName = "";
+    this.client.Gender = "";
+    this.client.Height = "";
+    this.client.Age = "";
+    this.client.CheckinTimeMinutes = "";
+    this.client.BirthDate = null;
+    this.client.ExpirationDate = null;
+    this.client.LicenseNumber = "";
+    this.client.StreetAddress = "";
+    this.client.City = "";
+    this.client.Jurisdiction = "";
+    this.client.Postal = "";
+    this.client.MobileNumber = "";
+    this.client.LastCheckInDate = null;
+    this.client.LastPurchaseDate = null;
+    this.client.Tags = "";
+  }
 
 
 

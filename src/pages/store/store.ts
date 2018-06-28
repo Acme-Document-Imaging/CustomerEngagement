@@ -1,13 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, Events, NavParams } from 'ionic-angular';
-import { HttpClient, HttpHeaders, HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Configuration } from '../../app/Configuration';
-/**
- * Generated class for the StorePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpResponse, HttpParams } from '@angular/common/http';
+import { Configuration } from '../../app/BL/Configuraion';
+import { ClientID } from '../../app/BL/ClientID';
 
 @IonicPage()
 @Component({
@@ -15,14 +10,15 @@ import { Configuration } from '../../app/Configuration';
   templateUrl: 'store.html',
 })
 export class StorePage {
-  listStoreClients = [];
+  listStoreClients: any = [];
   //listStoreClients: ClientID[];
-  client: ClientID;
+  client: any;
 
 
   url: string = "";
   token: string = "";
   outClient: ClientID;
+  //employeeAssignDTO: EmployeeAssignDTO;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams
@@ -31,56 +27,74 @@ export class StorePage {
     this.token = _configuration.Token;
     this.url = _configuration.ApiUrl;
 
-    this.client = navParams.get('client');
-    this.listStoreClients.push(this.client);
+    // this.client = navParams.get('client');
+    // this.listStoreClients.push(this.client);
 
 
-    this.client = navParams.get('client');
+    this.client = navParams.get('clientStore');
 
-    console.log(this.listStoreClients)
-
+    debugger;
     events.subscribe('change-tab', (tab, client) => {
-      console.log("beforepush" + client);
       this.client = client;
+      debugger;
       this.listStoreClients.push(client);
     });
 
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad StorePage');
+    //console.log('ionViewDidLoad StorePage');
   }
 
   //make next tab selected
   selectTab(index: number, client: ClientID) {
-    this.events.publish('change-tab', 1, client);
+    this.events.publish('change-tab', index, client);
   }
+
+
+  showClient() {
+    this.selectTab(2, this.outClient);
+  }
+
+
+
 
   //assign Client to Employee and select 3rd tab
   assignEmployee(client: ClientID) {
-    //post request to assign 
-    console.log("assignEmp emp" + this._configuration.SelectedEmp);
-    console.log("assignEmp Client" + client);
-    console.log("assignEmp Client queueid" + client.QueueId);
     debugger;
-    this.http.post(this.url + "/EmployeeAssignment",
-      {
-        EmpId: this._configuration.SelectedEmp,
-        QueueId: client.QueueId
-      },
+    //post request to assign 
+
+    var thisemployeeAssignDTO = { "EmpId": this._configuration.SelectedEmpID, "QueueId": client.QueueId };
+
+    var httpParams = new HttpParams()
+      .append("EmpId", this._configuration.SelectedEmpID)
+      .append("QueueId", client.QueueId)
+
+    this.http.post(this.url + "/EmployeeAssignment"
+      // {
+      //   "EmpId": this._configuration.SelectedEmp.EmployeeId,
+      //   "QueueId": client.QueueId
+      // }
+      //thisemployeeAssignDTO,
+      , this._configuration.SelectedEmpID,
+      //httpParams,
+
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/x-www-form-urlencoded',
           'Authorization': 'Bearer ' + this.token
-        }), withCredentials: true
-      }
+        })
+        , params: httpParams
+        , withCredentials: true
+      },
+
 
     )
       .subscribe((res) => {
         debugger;
         this.outClient = <ClientID>res;
-        console.log("success post" + res);
-        console.log("success post cast" + this.outClient);
+        this._configuration.clientID = this.outClient;
+        this.selectTab(2, this.outClient);
         //then select 3rd tab
       }
         , (error: HttpErrorResponse) => {

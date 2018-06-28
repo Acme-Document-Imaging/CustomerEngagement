@@ -24,7 +24,7 @@ export class TabsPage {
   // tab5Root = AboutPage;
   // tab6Root = ContactPage;
 
-  storeListParam = { client: null };
+  param = { client: null };
 
   //selectedEmp:string = "";
 
@@ -34,7 +34,7 @@ export class TabsPage {
 
 
     events.subscribe('change-tab', (tab, data) => {
-      this.storeListParam.client = data;
+      this.param.client = data;
       this.tabs.select(tab);
     });
   }

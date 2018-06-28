@@ -19,7 +19,7 @@ export class ShoppingPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ShoppingPage');
+    //console.log('ionViewDidLoad ShoppingPage');
   }
 
 }

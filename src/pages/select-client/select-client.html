@@ -14,75 +14,79 @@
 
 
 <ion-content padding>
-    <ion-list>
+  <ion-list>
 
-        <ion-item>
-          <ion-label stacked>First Name</ion-label>
-          <ion-input type="text" [(ngModel)]="client.firstName" value="{{client.firstName.value}}" ></ion-input>
-        </ion-item>
-    
-        <ion-item>
-          <ion-label stacked>Last Name</ion-label>
-          <ion-input type="text" [(ngModel)]="client.lastName" value="{{client.lastName.value}}"></ion-input>
-        </ion-item>
-    
-        <ion-item>
-          <ion-label stacked>Birthdate</ion-label>
-          <ion-input type="text" [(ngModel)]="client.birthDate" value="{{client.birthDate.value}}"></ion-input>
-        </ion-item>
-    
-        <ion-item>
-          <ion-label stacked>Address</ion-label>
-          <ion-input type="text" [(ngModel)]="client.address" value="{{client.address.value}}"></ion-input>
-        </ion-item>
-    
-        <ion-item>
-          <ion-label stacked>Zip Code</ion-label>
-          <ion-input type="text" [(ngModel)]= "client.zipCode" value = "{{client.zipCode.value}}"></ion-input>
-        </ion-item>
-    
-        <ion-item>
-          <ion-label stacked>Last Purchase Date</ion-label>
-          <ion-input type="text" [(ngModel)]= "client.lastPurchaseDate" value = "{{client.lastPurchaseDate.value}}"></ion-input>
-        </ion-item>
-    
-        <ion-item>
-          <ion-label stacked>Last Purchase Item</ion-label>
-          <ion-input type="text" [(ngModel)]= "client.lastPurchaseItem" value = "{{client.lastPurchaseItem.value}}"></ion-input>
-        </ion-item>
-    
-        <ion-item>
-          <ion-label stacked>State</ion-label>
-          <ion-input type="text" [(ngModel)]= "client.state" value = "{{client.state.value}}"></ion-input>
-        </ion-item>
-    
-        <ion-item>
-          <ion-label stacked>Phone</ion-label>
-          <ion-input type="text" [(ngModel)]= "client.phone" value = "{{client.phone.value}}"></ion-input>
-        </ion-item>
-    
-        <ion-item>
-          <ion-label stacked>Last Visit Date</ion-label>
-          <ion-input type="text" [(ngModel)]= "client.lastVisitDate" value = "{{client.lastVisitDate.value}}"></ion-input>
-        </ion-item>
-    
-        <ion-item>
-          <ion-label stacked>Tags</ion-label>
-          <ion-input type="text" [(ngModel)]= "client.tags" value = "{{client.tags.value}}"></ion-input>
-        </ion-item>
-    
-    
-        <ion-card>
-          <ion-card-header>
-            Purchases
-          </ion-card-header>
-          <ion-card-content>
-            <canvas #doughnutCanvas></canvas>
-          </ion-card-content>
-        </ion-card>
-    
+    <ion-item>
+      <ion-label stacked>First Name</ion-label>
+      <ion-input type="text" [(ngModel)]="client.FirstName" value="{{client?.FirstName}}" [readonly]="!userSessionStarted"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Last Name</ion-label>
+      <ion-input type="text" [(ngModel)]="client.LastName" value="{{client?.LastName}}" [readonly]="!userSessionStarted"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Birthdate</ion-label>
+      <!-- <ion-input type="text" [(ngModel)]="client.BirthDate" value="{{client?.BirthDate | date: MM/dd/yyyy  }}"></ion-input> -->
+      <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="client.BirthDate"  ></ion-datetime> 
+       
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Address</ion-label>
+      <ion-input type="text" [(ngModel)]="client.StreetAddress" value="{{client?.StreetAddress}}" [readonly]="!userSessionStarted"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Zip Code</ion-label>
+      <ion-input type="text" [(ngModel)]="client.Postal" value="{{client?.Postal}}" [readonly]="!userSessionStarted"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Last Purchase Date</ion-label>
+      <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="client.LastPurchaseDate"  ></ion-datetime> 
+      <!-- <ion-input type="text" [(ngModel)]="client.LastPurchaseDate" value="{{client?.LastPurchaseDate}}" [readonly]="!userSessionStarted"></ion-input> -->
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Last Purchase Item</ion-label>
+      <ion-input type="text" [(ngModel)]="client.LastPurchaseItem" value="{{client?.LastPurchaseItem}}" [readonly]="!userSessionStarted"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>State</ion-label>
+      <ion-input type="text" [(ngModel)]="client.Jurisdiction" value="{{client?.Jurisdiction}}" [readonly]="!userSessionStarted"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Phone</ion-label>
+      <ion-input type="text" [(ngModel)]="client.MobileNumber" value="{{client?.MobileNumber}}" [readonly]="!userSessionStarted"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Last Visit Date</ion-label>
+      <!-- <ion-input type="text" [(ngModel)]="client.LastCheckInDate" value="{{client?.LastCheckInDate}}" [readonly]="!userSessionStarted"></ion-input> -->
+      <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="client.LastCheckInDate" ></ion-datetime> 
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Tags</ion-label>
+      <ion-input type="text" [(ngModel)]="client.Tags" value="{{client?.Tags}}" [readonly]="!userSessionStarted"></ion-input>
+    </ion-item>
 
 
-      </ion-list>
+    <ion-card>
+      <ion-card-header>
+        Purchases
+      </ion-card-header>
+      <ion-card-content>
+        <canvas #doughnutCanvas></canvas>
+      </ion-card-content>
+    </ion-card>
+
+
+
+  </ion-list>
 
 </ion-content>

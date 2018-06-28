@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, List } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
-import { Configuration } from '../../app/Configuration';
+import { Configuration } from '../../app/BL/Configuraion';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 
@@ -37,13 +37,9 @@ export class EmployeesPage {
 
       )
         .subscribe((res) => {
-          debugger;
+          //debugger;
           var employeesList = <Employee[]>res;
-
           this.listEmployees = employeesList;
-
-          //console.log("this.emp list[0] " + this.listEmployees[0]);
-
         }
           , (error: HttpErrorResponse) => {
             //error status == 404 that means client does not exist/save client
@@ -59,18 +55,17 @@ export class EmployeesPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad EmployeesPage');
+    //console.log('ionViewDidLoad EmployeesPage');
   }
 
   //Next
   nextClick() {
     this.navCtrl.push(TabsPage, { empID: this.selectedEmployee });
-    this._configuration.SelectedEmp = this.selectedEmployee;
+    this._configuration.SelectedEmpID = this.selectedEmployee;
   }
 
   getSelectedValue(myselect) {
     this.selectedEmployee = myselect;
-    console.log(this.selectedEmployee);
   }
 
 

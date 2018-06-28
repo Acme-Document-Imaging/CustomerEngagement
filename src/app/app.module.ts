@@ -14,7 +14,7 @@ import { QueuePage } from '../pages/queue/queue';
 import { StorePage } from '../pages/store/store';
 import { SelectClientPage } from '../pages/select-client/select-client';
 import { EmployeesPage } from '../pages/employees/employees';
-import { Configuration } from '../app/Configuration';
+import { Configuration } from '../app/BL/Configuraion';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
