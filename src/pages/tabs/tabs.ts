@@ -8,6 +8,7 @@ import { QueuePage } from '../queue/queue';
 import { NavParams, Tabs, Events } from 'ionic-angular';
 import { ViewChild } from '@angular/core';
 import { StorePage } from '../store/store';
+import { ClientID } from '../../app/BL/ClientID';
 
 @Component({
   templateUrl: 'tabs.html'
@@ -15,27 +16,36 @@ import { StorePage } from '../store/store';
 
 export class TabsPage {
   @ViewChild(Tabs) tabs: Tabs;
-  //// tab1Root = HomePage;
+
   tab1Root = QueuePage;
   tab2Root = StorePage;
   tab3Root = SelectClientPage;
 
-  // tab4Root = HomePage;
-  // tab5Root = AboutPage;
-  // tab6Root = ContactPage;
-
   param = { client: null };
 
-  //selectedEmp:string = "";
+  //Parameter for store Client
+  paramStore = { clientStore: null };
+
+  paramSelect = { clientSelect: ClientID };
+
 
   constructor(public params: NavParams, public events: Events) {
+    debugger;
 
-    //this.selectedEmp = params.get('empID');
-
-
+    //event subscribed generated from Queue
     events.subscribe('change-tab', (tab, data) => {
-      this.param.client = data;
+      this.paramStore.clientStore = data;
       this.tabs.select(tab);
     });
+
+    // events.subscribe('selectClient', (data) => {
+    //   this.paramSelect.clientSelect = data;
+    // });
+
+    events.subscribe('selectClient', (data) => {
+      this.paramSelect.clientSelect = data;
+      //this.tabs[2].tabTitle = data.FirstName;
+    });
   }
+
 }

@@ -5,6 +5,10 @@ import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Configuration } from '../../app/BL/Configuraion';
 import { ClientID } from '../../app/BL/ClientID';
+import { SelectClientPage } from '../select-client/select-client';
+import { ToastController } from 'ionic-angular';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/throw';
 
 @IonicPage()
 @Component({
@@ -12,52 +16,67 @@ import { ClientID } from '../../app/BL/ClientID';
   templateUrl: 'queue.html',
 })
 export class QueuePage {
-
-  clientStore: any;
-
   url: string = "";
   token: string = "";
 
+  //QueueList
   listClients: ClientID[];
+
+  //Client Parameter to send to store tab
+  clientStore: any;
+
+  //Client returned from Post Employee
   outClientSelect: ClientID;
 
   constructor(public navCtrl: NavController, public navParams: NavParams
-    , private _configuration: Configuration, public events: Events
-    , private http: HttpClient) {
+    , public _configuration: Configuration, public events: Events
+    , private http: HttpClient, public toastCtrl: ToastController) {
 
     this.token = _configuration.Token;
     this.url = _configuration.ApiUrl;
 
     if (_configuration.Token != null && _configuration.Token != "") {
-      //Get Employees 
 
-      this.http.get(this.url + "/GetQueueCustomer",
-        {
-          headers: new HttpHeaders({
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': 'Bearer ' + this.token
-          }), withCredentials: true
-        }
-
-      )
-        .subscribe((res) => {
-          //debugger;
-          this.listClients = <ClientID[]>res;
-        }
-          , (error: HttpErrorResponse) => {
-            //error status == 404 that means client does not exist/save client
-            if (error.status === 404) {
-            }
-            else {
-              console.log("ErrorMsg = " + error.message);
-            }
+      //API Call Get Clients for Queue
+      try {
+        this.http.get(this.url + "/GetQueueCustomer",
+          {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'Authorization': 'Bearer ' + this.token
+            }), withCredentials: true
           }
-        );
+        )
+          .catch(this.handleError)
+          .subscribe((res) => {
+            //success
+            //debugger;
+            this.listClients = <ClientID[]>res;
+          }
+            , (error: HttpErrorResponse) => {
+              //error status == 404 that means client does not exist/save client
+              if (error.status === 404) {
+              }
+              else {
+                //console.log("ErrorMsg = " + error.message);
+                this.showToastWithCloseButton("Error in Queue " + error.message);
+              }
+            }
+          );
+      }
+      catch (Exception) {
+        debugger;
+        //Notification for Error
+        //this.ErrorMessage = Exception.ErrorMessage;
+        this.showToastWithCloseButton("Error in Queue " + Exception.ErrorMessage);
+      }
+
 
     }
   }
 
   ionViewDidLoad() {
+    debugger;
     //console.log('ionViewDidLoad QueuePage');
   }
 
@@ -69,22 +88,18 @@ export class QueuePage {
       this.listClients.splice(index, 1);
     }
 
-    //debugger;
-
-    // this.selectTab(1);
+    //call select next(Store) tab
+    this.selectTab(1);
 
     //call assign Employee
     this.assignEmployee(client);
-    //select next tab
-
   }
 
-  //Function make next tab selected
+  //**//Function make next tab selected
   // selectTab(index: number, client: any) {
   selectTab(index: number) {
-    //debugger;
-    console.log("tab selected" + this.clientStore.lastCheckintime);
-    
+    debugger;
+    //console.log("tab selected" + this.clientStore.lastCheckintime);
     this.events.publish('change-tab', index, this.clientStore);
   }
 
@@ -95,107 +110,94 @@ export class QueuePage {
   }
 
 
-  //Function assign Employee to selected client
+  //**//Function assign Employee to selected client
   assignEmployee(client: ClientID) {
     //debugger;
     //post request to assign 
-
-   // var thisemployeeAssignDTO = { "EmpId": this._configuration.SelectedEmpID, "QueueId": client.QueueId };
-
 
     var httpParams = new HttpParams()
       .append("EmpId", this._configuration.SelectedEmpID)
       .append("QueueId", client.QueueId)
 
-    this.http.post(this.url + "/EmployeeAssignment"
-      // {
-      //   "EmpId": this._configuration.SelectedEmp.EmployeeId,
-      //   "QueueId": client.QueueId
-      // }
-      //thisemployeeAssignDTO,
-      , this._configuration.SelectedEmpID,
-      //httpParams,
-
-      {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Authorization': 'Bearer ' + this.token
-        })
-        , params: httpParams
-        , withCredentials: true
-      },
 
 
-    )
-      .subscribe((res) => {
-        //debugger;
-        //this.outClientSelect = <ClientID>res;
-        this._configuration.clientID = <ClientID>res;
+    try {
 
-        this.selectTab(1);
+      //API call to Assign Employee   
+      this.http.post(this.url + "/EmployeeAssignment"
+        , this._configuration.SelectedEmpID,
+        {
+          headers: new HttpHeaders({
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Bearer ' + this.token
+          })
+          , params: httpParams
+          , withCredentials: true
+        },
+      )
+        .catch(this.handleErrorAssign)
+        .subscribe((res) => {
+          debugger;
+          //Returned client set to Configuration
+          this.outClientSelect = <ClientID>res;
+          this._configuration.clientID = this.outClientSelect;
 
+          this.events.publish("selectClient", this.outClientSelect);
 
-        //this.selectTabSelectClient(2,  this._configuration.clientID);
-        //then select 3rd tab
-      }
-        , (error: HttpErrorResponse) => {
-          //error status == 404 that means client does not exist/save client
-          if (error.status === 404) {
-          }
-          else {
-            console.log("ErrorMsg = " + error.message);
-          }
+          // this.navCtrl.push(SelectClientPage).then(() => {
+          //   this.events.publish('selectClient', this.outClientSelect);
+          //   console.log('Published');
+          // });
+
+          //then select 3rd tab
         }
-      );
+          , (error: HttpErrorResponse) => {
+            //error status == 404 that means client does not exist/save client
+            if (error.status === 404) {
+            }
+            else {
+              //console.log("ErrorMsg = " + error.message);
+              this.showToastWithCloseButton("Error in Assign " + error.message);
+            }
+          }
+        );
+    }
+    catch (Exception) {
+      debugger;
+      //Notification for Error
+      //this.ErrorMessage = Exception.ErrorMessage;
+      this.showToastWithCloseButton("Error in Assign " + Exception.ErrorMessage);
+    }
+
+  }
+
+  //handle Error Function
+  public handleError = (error: HttpErrorResponse) => {
+    // Do messaging and error handling here
+    debugger;
+    this.showToastWithCloseButton("Error in Queue " + error.status + " " + error.statusText);
+    return Observable.throw(error)
+  }
+
+  //handle Error Function (Employee Assignment)
+  public handleErrorAssign = (error: HttpErrorResponse) => {
+    // Do messaging and error handling here
+    debugger;
+    this.showToastWithCloseButton("Error in Assign " + error.status + " " + error.statusText);
+    return Observable.throw(error)
+  }
+
+  //Toast Notification with Close Button
+  showToastWithCloseButton(msg: string) {
+    const toast = this.toastCtrl.create({
+      message: msg,
+      position: "middle",
+      showCloseButton: true,
+      closeButtonText: 'Ok'
+    });
+    toast.present();
   }
 
 
 }
 
-
-
-
-
-// import { Component } from '@angular/core';
-// import { NavController, Tabs, Events } from 'ionic-angular';
-// import { CommonModule } from '@angular/common';
-// import { AboutPage } from '../about/about'
-
-// @Component({
-//   selector: 'page-queue',
-//   templateUrl: 'queue.html'
-// })
-// export class QueuePage {
-
-//   clients = [
-//     { "name": "Name 1", "age": "30", "height": "74in", "lastCheckintime": "5" },
-//     { "name": "Name 2", "age": "31", "height": "73in", "lastCheckintime": "4" },
-//     { "name": "Name 3", "age": "32", "height": "72in", "lastCheckintime": "3" },
-//     { "name": "Name 3", "age": "33", "height": "71in", "lastCheckintime": "2" },
-//     { "name": "Name 4", "age": "34", "height": "75in", "lastCheckintime": "1" },
-//   ];
-
-//   constructor(public navCtrl: NavController,private events: Events) { }
-
-//   removeItem(client) {
-//     let index = this.clients.indexOf(client);
-//     if (index > -1) {
-//       this.clients.splice(index, 1);
-//     }
-//     // alert("client = "+client + " index ="+ index);
-//     //this.navCtrl.push(AboutPage, {client: client});
-//     this.selectTab(1,client);
-
-
-//   }
-
-//   selectTab(index: number, client: any) {
-//     // var t: Tabs = this.navCtrl.parent;
-//     // t.select(index,client);
-//     //alert("in select tab");
-
-//     this.events.publish('change-tab', 1, client);
-// }
-
-
-// }

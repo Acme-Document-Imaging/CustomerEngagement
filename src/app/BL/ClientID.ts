@@ -24,5 +24,5 @@ export class ClientID {
     LastPurchaseDate: DateTime = null
     LastPurchaseItem: string = "";
     Tags:string = "";
-    Purchases: ClientPurchases;
+    Purchases: ClientPurchases[];
 }

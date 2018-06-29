@@ -12,13 +12,36 @@
 
 </ion-header>
 
-
 <ion-content padding>
+
+    <p *ngIf="submitAttempt" style="color: #ea6153;">Please fill out all details accurately.</p>
+ 
+    <ion-list no-lines>
+     
+        <form [formGroup]="loginForm">
+     
+            <ion-item>
+                <ion-label floating>User Name</ion-label>
+                <ion-input formControlName="UserName"  type="text" ></ion-input>
+            </ion-item>
+     
+            <ion-item>
+                <ion-label floating>Password</ion-label>
+                <ion-input formControlName="Password" type="password" ></ion-input>
+            </ion-item>
+     
+        </form>
+     
+    </ion-list>
+
+
+
+<!--   
   <ion-list>
 
     <ion-item>
       <ion-label stacked>User Name</ion-label>
-      <ion-input type="text" [(ngModel)]="Username" required></ion-input>
+      <ion-input type="text" [(ngModel)]="Username" ng-required="true"></ion-input>
     </ion-item>
 
     <ion-item>
@@ -26,7 +49,11 @@
       <ion-input type="password" [(ngModel)]="Password"></ion-input>
     </ion-item>
 
-  </ion-list>
+    <ion-item>
+      <ion-input type="text" formControlName="name"></ion-input>
+    </ion-item>
+
+  </ion-list> -->
 
   <div padding>
     <button ion-button color="primary" block (click)="loginClick();">Sign In</button>

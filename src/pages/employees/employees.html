@@ -6,22 +6,28 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar hideBackButton>
     <ion-title>Choose Employee</ion-title>
   </ion-navbar>
 
 </ion-header>
 
+
 <ion-content padding>
 
-  <ion-item>
-    <ion-label>Employees</ion-label>
-    <ion-select interface="popover" [(ngModel)]="listEmployees.Employee" (ionChange)="getSelectedValue(listEmployees.Employee);">
-      <ion-option *ngFor="let emp of listEmployees" [value]="emp.EmployeeId">{{emp.EmployeeName}}</ion-option>
-    </ion-select>
-  </ion-item>
-  <p>
-    <button ion-button (click)="nextClick()">Next</button>
-  </p>
+  <p *ngIf="submitAttempt" style="color: #ea6153;">Please select Employee!</p>
+  <ion-list>
+    <ion-item>
+      <ion-label>Employees</ion-label>
+      <ion-select interface="popover" [(ngModel)]="listEmployees.Employee" (ionChange)="getSelectedValue(listEmployees.Employee);">
+        <ion-option *ngFor="let emp of listEmployees" [value]="emp.EmployeeId">{{emp.EmployeeName}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+  </ion-list>
+
+  <div padding>
+    <button ion-button color="primary" block (click)="nextClick();">Next</button>
+  </div>
 
 </ion-content>

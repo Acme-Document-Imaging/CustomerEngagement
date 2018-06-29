@@ -21,7 +21,13 @@
       <p> Last Check-in Time: {{client.CheckinTimeMinutes}} </p> -->
       <p>
         <b>
-          <ion-icon name="man"></ion-icon> ({{client?.FirstName}})</b> {{client?.FirstName}} {{client?.LastName}}** {{client?.Gender}} {{client?.Age}}</p>
+          <ion-icon style="font-size:2em !important" name="man" class="larger" *ngIf="client?.Gender == 'Undefined' "></ion-icon>
+            <ion-icon name="man" class="larger" *ngIf="client?.Gender == 'Male' "></ion-icon>
+              <ion-icon name="woman" class="larger" *ngIf="client?.Gender == 'Female' "></ion-icon>
+                ({{client?.FirstName}})</b> 
+                <!-- {{client?.FirstName}} 
+                {{client?.LastName}} -->
+                ** {{client?.Gender}} {{client?.Age}}</p>
       <p>Last Checkin Time: {{client?.CheckinTimeMinutes}}</p>
     </ion-item>
 
