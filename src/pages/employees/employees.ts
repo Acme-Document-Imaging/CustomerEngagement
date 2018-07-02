@@ -53,16 +53,16 @@ export class EmployeesPage {
               //error status == 404 that means client does not exist/save client
               if (error.status === 404) {
               }
-              else {
-                //console.log("ErrorMsg = " + error.message);
-                this.showToastWithCloseButton("error in loading employees "+error.message);
-              }
+              // else {
+              //   //console.log("ErrorMsg = " + error.message);
+              //   this.showToastWithCloseButton("error in loading employees " + error.message);
+              // }
             }
           );
       } catch (Exception) {
         debugger;
         //Notification for Error
-        this.showToastWithCloseButton("error in loading employees "+Exception.ErrorMessage);
+        this.showToastWithCloseButton("error in loading employees " + Exception.ErrorMessage);
       }
     }
   }
@@ -74,6 +74,8 @@ export class EmployeesPage {
   //Next
   nextClick() {
     debugger;
+
+    //UnComment it
     if (this.selectedEmployee == null) {
       this.submitAttempt = true;
     }
@@ -105,7 +107,9 @@ export class EmployeesPage {
   public handleError = (error: HttpErrorResponse) => {
     // Do messaging and error handling here
     debugger;
-    this.showToastWithCloseButton("error in loading employees "+error.status + " " + error.statusText);
+    //this.showToastWithCloseButton("error in loading employees " + error.status + " " + error.statusText);
+    const errorObject = <ErroResponse>error.error;
+    this.showToastWithCloseButton("Error loading employees:" + errorObject.error_description);
     return Observable.throw(error)
   }
 

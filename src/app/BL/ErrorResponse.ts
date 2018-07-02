@@ -1,4 +1,4 @@
 interface ErroResponse {
-    name: string;
-    message: string;
+    error : string;
+    error_description: string;
 }

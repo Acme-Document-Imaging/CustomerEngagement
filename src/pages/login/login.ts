@@ -103,8 +103,11 @@ export class LoginPage {
               //Redirect to Employees Page
               this.navCtrl.push(EmployeesPage);
             }, error => {
-              //console.log(JSON.stringify(error));
-              this.showToastWithCloseButton("Error in login " + error.ErrorMessage);
+              debugger
+              //var errrr = <HttpErrorResponse>error;
+              console.log(JSON.stringify(error));
+              //var err = JSON.stringify(error)
+              //this.showToastWithCloseButton("Error in login " + error.error_description);
             }
 
           );
@@ -113,7 +116,7 @@ export class LoginPage {
         debugger;
         //Notification for Error
         //this.ErrorMessage = Exception.ErrorMessage;
-        this.showToastWithCloseButton("Error in login " + Exception.ErrorMessage);
+        this.showToastWithCloseButton("Error in login:" + Exception.ErrorMessage);
       }
     }
   }
@@ -122,7 +125,9 @@ export class LoginPage {
   public handleError = (error: HttpErrorResponse) => {
     // Do messaging and error handling here
     debugger;
-    this.showToastWithCloseButton("Error in login " + error.status + " " + error.statusText);
+    // Do messaging and error handling here
+    const errorObject = <ErroResponse>error.error;
+    this.showToastWithCloseButton("Error in login:" + errorObject.error_description);
     return Observable.throw(error)
   }
 

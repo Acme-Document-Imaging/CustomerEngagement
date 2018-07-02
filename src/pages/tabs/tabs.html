@@ -1,14 +1,13 @@
 
-<ion-tabs>
-  <ion-tab [root]="tab1Root" tabTitle="Queue" tabIcon="arrow-down"></ion-tab>
-  <!-- <ion-tab [root]="tab2Root" [rootParams]="tab2Params" tabTitle="Store" tabIcon="appstore"></ion-tab> -->
+<ion-tabs tabsPlacement="top">
+  <!-- <ion-tab [root]="tab1Root" tabTitle="Queue" tabIcon="arrow-down"></ion-tab>
   <ion-tab [root]="tab2Root" [rootParams]="paramStore" tabTitle="Store" tabIcon="appstore"></ion-tab>
-  <ion-tab [root]="tab3Root" [rootParams]="paramSelect" tabTitle="Select" tabIcon="add-circle"></ion-tab>
-  <!-- <ion-tab [root]="tab3Root" tabTitle="Select" tabIcon="add-circle"></ion-tab> -->
+  <ion-tab [root]="tab3Root" [rootParams]="paramSelect" tabTitle="Select" tabIcon="add-circle"></ion-tab> -->
 
-<!-- 
-  <ion-tab [root]="tab4Root" tabTitle="Home" tabIcon="arrow-down"></ion-tab>
-  <ion-tab [root]="tab5Root" tabTitle="About" tabIcon="appstore"></ion-tab>
-  <ion-tab [root]="tab6Root" tabTitle="Contact" tabIcon="add-circle"></ion-tab> -->
+
+  <ion-tab [root]="tab1Root" tabTitle="Waiting" tabIcon="timer" outline></ion-tab>
+  <ion-tab [root]="tab2Root" tabTitle="Shopping" tabIcon="cart"></ion-tab>
+  <ion-tab [root]="tab3Root" tabTitle="Serving" [rootParams]="paramClientInfo" tabIcon="person"></ion-tab>
+  <ion-tab [root]="tab4Root" tabTitle="Happy" tabIcon="heart"></ion-tab>
 
 </ion-tabs>

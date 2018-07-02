@@ -20,9 +20,11 @@ export class ClientID {
     Postal: string = "";
     MobileNumber: string = "";
     LastCheckInDate: DateTime = null ;
-    LastPurchaseAmount: string = "";
     LastPurchaseDate: DateTime = null
+    LastPurchaseAmount: Number = 0;
     LastPurchaseItem: string = "";
+    AvgPurchaseAmount: Number = 0;
+    CustomerSinceDate: DateTime = null ;
     Tags:string = "";
     Purchases: ClientPurchases[];
 }

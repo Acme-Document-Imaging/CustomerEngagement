@@ -1,5 +1,8 @@
+import { DateTime } from "ionic-angular";
+
 export class ClientPurchases {
     ProductName: string;
-    Price: string;
-    Quantity: string;
+    Price: Number;
+    Quantity: Number;
+    PurchaseDate: DateTime;
 }

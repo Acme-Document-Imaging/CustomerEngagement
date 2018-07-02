@@ -1,0 +1,19 @@
+<!-- <ion-header>
+
+  <ion-navbar>
+    <ion-title>serving</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+</ion-content> -->
+
+<ion-tabs tabsPlacement="bottom">
+  <ion-tab [root]="tab1Root" tabTitle="Customer Info" [rootParams]="paramClientBasicInfo" tabIcon="information-circle" outline></ion-tab>
+  <ion-tab [root]="tab2Root" tabTitle="Past Purchases" [rootParams]="paramListPurchases" tabIcon="cart"></ion-tab>
+  <ion-tab [root]="tab3Root" tabTitle="Customer Notes" tabIcon="list"></ion-tab>
+
+</ion-tabs>

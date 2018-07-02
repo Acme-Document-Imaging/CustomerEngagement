@@ -1,167 +1,152 @@
-import { Component, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef } from '@angular/core';
-//import { Component, ViewChild } from '@angular/core';
+// import { Component, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { Chart } from 'chart.js';
 import { Configuration } from '../../app/BL/Configuraion';
 import { ClientID } from '../../app/BL/ClientID';
 import { ClientPurchases } from '../../app/BL/ClientPurchases';
-// import { DatePipe } from '@angular/common';
-// import { Pipe, PipeTransform } from '@angular/core';
-
 
 @IonicPage()
 @Component({
-  //changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'page-select-client',
-  templateUrl: 'select-client.html',
+  selector: 'page-client-info',
+  templateUrl: 'client-info.html',
 })
-export class SelectClientPage {
+export class ClientInfoPage {
 
   @ViewChild('myChart') myChart: ElementRef;
-  //doughnutChart: any;
 
   client: ClientID;
-  listPurchases: ClientPurchases[];
+   //listPurchases: ClientPurchases[];
 
-  data = [];
-  ict_unit =[];
-  efficiency =[];
-  coloR = [];
-  barGraph: any;
+  // data = [];
+  // ict_unit =[];
+  // efficiency =[];
+  // coloR = [];
+  // barGraph: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams
-    , public events: Events, public _configuratoin: Configuration
-    , private _changeDetectionRef: ChangeDetectorRef) {
+    , public events: Events, public _configuratoin: Configuration) {
 
     debugger;
 
     this.client = new ClientID();
-    this.listPurchases = [];
+    //this.listPurchases = [];
 
-    var paramVal = navParams.get('clientSelect');
+    var paramVal = navParams.get('clientBasicInfo');
     if (paramVal != undefined && paramVal != null) {
       this.client = paramVal;
-      this.listPurchases = this.client.Purchases;
-      //call load Purchases
-      //this.loadPurchases();
+      //this.listPurchases = this.client.Purchases;
     }
 
-    events.subscribe("selectClient", (selectClient) => {
+    // events.subscribe("selectClient", (selectClient) => {
+    //   debugger;
+    //   this.client = selectClient;
+    //   //this.listPurchases = this.client.Purchases;
+    //   console.log("event called in select Client page client = " + this.client);
+
+    //   //this._changeDetectionRef.detectChanges();
+
+    // })
+
+    events.subscribe("showClientBasicInfo", (selectClient) => {
       debugger;
       this.client = selectClient;
-      this.listPurchases = this.client.Purchases;
-      console.log("event called in select Client page client = " + this.client);
-
-
-
-      //call load Purchases
-      //this.loadPurchases();
-
-
-
-
-
-
-
-
-
-      this._changeDetectionRef.detectChanges();
-
+      console.log("event subscribed for Client Basic info");
     })
   }
 
-  //make chart for purchases
-  loadPurchases() {
-    debugger;
-    this.data = this.listPurchases;
-    this.ict_unit = [];
-    this.efficiency = [];
-    this.coloR = [];
+  // //make chart for purchases
+  // loadPurchases() {
+  //   debugger;
+  //   this.data = this.listPurchases;
+  //   this.ict_unit = [];
+  //   this.efficiency = [];
+  //   this.coloR = [];
 
-    var dynamicColors = function (i, total) {
-      var r = 100 + i * 155 / total;
-      var g = i * 255 / total;
-      var b = i * 255 / total;
-      return "rgb(" + r + "," + g + "," + b + ")";
-    };
+  //   var dynamicColors = function (i, total) {
+  //     var r = 100 + i * 155 / total;
+  //     var g = i * 255 / total;
+  //     var b = i * 255 / total;
+  //     return "rgb(" + r + "," + g + "," + b + ")";
+  //   };
 
-    // var dynamicColors = function (i, total) {
-    //   debugger;
-    //   var r = 50 + i * 35 / total;
-    //   var g = i * 170 / total;
-    //   var b = i * 20 / total;
-    //   return "rgb(" + r + "," + g + "," + b + ")";
-    // };
+  //   // var dynamicColors = function (i, total) {
+  //   //   debugger;
+  //   //   var r = 50 + i * 35 / total;
+  //   //   var g = i * 170 / total;
+  //   //   var b = i * 20 / total;
+  //   //   return "rgb(" + r + "," + g + "," + b + ")";
+  //   // };
 
-    // var dynamicColors = function (i, total) {
-    //   debugger;
-    //   var r = 50 + i * 35 / total;
-    //   var g = i * 150 / total;
-    //   var b = i * 180 / total;
-    //   return "rgb(" + r + "," + g + "," + b + ")";
-    // };
+  //   // var dynamicColors = function (i, total) {
+  //   //   debugger;
+  //   //   var r = 50 + i * 35 / total;
+  //   //   var g = i * 150 / total;
+  //   //   var b = i * 180 / total;
+  //   //   return "rgb(" + r + "," + g + "," + b + ")";
+  //   // };
 
-    for (var i in this.data) {
-      debugger;
-      // ict_unit.push("aaaa");
-      this.ict_unit.push(this.data[i].ProductName);
-      this.efficiency.push(this.data[i].Quantity);
-      this.coloR.push(dynamicColors(i, this.data.length));
-    }
-    var chartData = {
+  //   for (var i in this.data) {
+  //     debugger;
+  //     // ict_unit.push("aaaa");
+  //     this.ict_unit.push(this.data[i].ProductName);
+  //     this.efficiency.push(this.data[i].Quantity);
+  //     this.coloR.push(dynamicColors(i, this.data.length));
+  //   }
+  //   var chartData = {
 
-      labels: this.ict_unit,
-      datasets: [{
-        label: 'Efficiency ',
-        //strokeColor:backGround,
+  //     labels: this.ict_unit,
+  //     datasets: [{
+  //       label: 'Efficiency ',
+  //       //strokeColor:backGround,
 
-        backgroundColor: this.coloR,
+  //       backgroundColor: this.coloR,
 
-        borderColor: 'rgba(200, 200, 200, 0.75)',
-        //hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
-        //hoverBorderColor: 'rgba(200, 200, 200, 1)',
-        data: this.efficiency
-      }]
-    };
+  //       borderColor: 'rgba(200, 200, 200, 0.75)',
+  //       //hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
+  //       //hoverBorderColor: 'rgba(200, 200, 200, 1)',
+  //       data: this.efficiency
+  //     }]
+  //   };
 
-    //this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement
+  //   //this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement
 
-    if (this.barGraph) {
-      this.barGraph.destroy();
-    }
+  //   if (this.barGraph) {
+  //     this.barGraph.destroy();
+  //   }
 
-     var ctx = document.getElementById("myChart");
-    //var ctx = document.getElementById("mybarChart2").getContext("2d");
+  //    var ctx = document.getElementById("myChart");
+  //   //var ctx = document.getElementById("mybarChart2").getContext("2d");
 
     
 
-    this.barGraph = new Chart(ctx, {
-      type: 'pie',
-      data: chartData
-    })
+  //   this.barGraph = new Chart(ctx, {
+  //     type: 'pie',
+  //     data: chartData
+  //   })
 
-    // this.barGraph.destroy();
+  //   // this.barGraph.destroy();
 
-    console.log("view child chart =" + this.myChart)
+  //   console.log("view child chart =" + this.myChart)
 
-    // var barGraph = new Chart(this.myChart.nativeElement, {
-    //   type: 'pie',
-    //   data: chartData
-    // })
-  }
+  //   // var barGraph = new Chart(this.myChart.nativeElement, {
+  //   //   type: 'pie',
+  //   //   data: chartData
+  //   // })
+  // }
 
-  ionViewDidEnter() {
-    debugger;
-    //call load Purchases
-    //clear data
-    this.data = [];
-    this.ict_unit =[];
-    this.efficiency =[];
-    this.coloR = [];
-    // this.barGraph.destroy();
+  // ionViewDidEnter() {
+  //   debugger;
+  //   //call load Purchases
+  //   //clear data
+  //   this.data = [];
+  //   this.ict_unit =[];
+  //   this.efficiency =[];
+  //   this.coloR = [];
+  //   // this.barGraph.destroy();
 
-    this.loadPurchases();
-  }
+  //   this.loadPurchases();
+  // }
 
   // ionViewDidLoad() {
   //console.log('ionViewDidLoad SelectClientPage');
@@ -286,12 +271,4 @@ export class SelectClientPage {
     this.client.LastPurchaseDate = null;
     this.client.Tags = "";
   }
-
-
-
-
-
-
-
-
 }

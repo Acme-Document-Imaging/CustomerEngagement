@@ -5,17 +5,19 @@ import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Configuration } from '../../app/BL/Configuraion';
 import { ClientID } from '../../app/BL/ClientID';
-import { SelectClientPage } from '../select-client/select-client';
+import { ClientInfoPage } from '../client-info/client-info';
 import { ToastController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
+import { DatePipe } from '@angular/common'
+
 
 @IonicPage()
 @Component({
-  selector: 'page-queue',
-  templateUrl: 'queue.html',
+  selector: 'page-waiting',
+  templateUrl: 'waiting.html',
 })
-export class QueuePage {
+export class WaitingPage {
   url: string = "";
   token: string = "";
 
@@ -30,7 +32,8 @@ export class QueuePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams
     , public _configuration: Configuration, public events: Events
-    , private http: HttpClient, public toastCtrl: ToastController) {
+    , private http: HttpClient, public toastCtrl: ToastController
+    , public datepipe: DatePipe) {
 
     this.token = _configuration.Token;
     this.url = _configuration.ApiUrl;
@@ -50,7 +53,7 @@ export class QueuePage {
           .catch(this.handleError)
           .subscribe((res) => {
             //success
-            //debugger;
+            debugger;
             this.listClients = <ClientID[]>res;
           }
             , (error: HttpErrorResponse) => {
@@ -59,7 +62,7 @@ export class QueuePage {
               }
               else {
                 //console.log("ErrorMsg = " + error.message);
-                this.showToastWithCloseButton("Error in Queue " + error.message);
+                //this.showToastWithCloseButton("Error in Queue " + error.message);
               }
             }
           );
@@ -88,11 +91,11 @@ export class QueuePage {
       this.listClients.splice(index, 1);
     }
 
-    //call select next(Store) tab
-    this.selectTab(1);
-
     //call assign Employee
     this.assignEmployee(client);
+
+
+
   }
 
   //**//Function make next tab selected
@@ -100,26 +103,23 @@ export class QueuePage {
   selectTab(index: number) {
     debugger;
     //console.log("tab selected" + this.clientStore.lastCheckintime);
-    this.events.publish('change-tab', index, this.clientStore);
+    this.events.publish('change-tab', index, this.outClientSelect);
   }
 
 
-  selectTabSelectClient(index: number, clientSelect: any) {
-    //debugger;
-    this.events.publish('change-tab', index, clientSelect);
-  }
+  // selectTabSelectClient(index: number, clientSelect: any) {
+  //   //debugger;
+  //   this.events.publish('change-tab', index, clientSelect);
+  // }
 
 
   //**//Function assign Employee to selected client
   assignEmployee(client: ClientID) {
     //debugger;
     //post request to assign 
-
     var httpParams = new HttpParams()
       .append("EmpId", this._configuration.SelectedEmpID)
       .append("QueueId", client.QueueId)
-
-
 
     try {
 
@@ -142,12 +142,11 @@ export class QueuePage {
           this.outClientSelect = <ClientID>res;
           this._configuration.clientID = this.outClientSelect;
 
-          this.events.publish("selectClient", this.outClientSelect);
+          //call select next(Serving) tab
+          this.selectTab(2);
 
-          // this.navCtrl.push(SelectClientPage).then(() => {
-          //   this.events.publish('selectClient', this.outClientSelect);
-          //   console.log('Published');
-          // });
+          this.events.publish("showClientBasicInfo", this.outClientSelect);
+          this.events.publish("showClientPurchases", this.outClientSelect.Purchases);
 
           //then select 3rd tab
         }
@@ -157,7 +156,7 @@ export class QueuePage {
             }
             else {
               //console.log("ErrorMsg = " + error.message);
-              this.showToastWithCloseButton("Error in Assign " + error.message);
+              //this.showToastWithCloseButton("Error in Assign " + error.message);
             }
           }
         );
@@ -175,15 +174,28 @@ export class QueuePage {
   public handleError = (error: HttpErrorResponse) => {
     // Do messaging and error handling here
     debugger;
-    this.showToastWithCloseButton("Error in Queue " + error.status + " " + error.statusText);
+    const errorObject = <ErroResponse>error.error;
+    this.showToastWithCloseButton("Error loading Waiting Queue:" + errorObject.error_description);
     return Observable.throw(error)
   }
+
+  //Function remove item from list 
+  itemRemove(client)
+  {
+    let index = this.listClients.indexOf(client);
+    if (index > -1) {
+      this.listClients.splice(index, 1);
+    }
+  }
+
 
   //handle Error Function (Employee Assignment)
   public handleErrorAssign = (error: HttpErrorResponse) => {
     // Do messaging and error handling here
     debugger;
-    this.showToastWithCloseButton("Error in Assign " + error.status + " " + error.statusText);
+    //this.showToastWithCloseButton("Error in Assign " + error.status + " " + error.statusText);
+    const errorObject = <ErroResponse>error.error;
+    this.showToastWithCloseButton("Error Assigning Employee:" + errorObject.error_description);
     return Observable.throw(error)
   }
 

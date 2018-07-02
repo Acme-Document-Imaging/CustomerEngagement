@@ -10,15 +10,20 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/login/login';
-import { QueuePage } from '../pages/queue/queue';
-import { StorePage } from '../pages/store/store';
-import { SelectClientPage } from '../pages/select-client/select-client';
 import { EmployeesPage } from '../pages/employees/employees';
+import { WaitingPage } from '../pages/waiting/waiting';
+import { ServingPage } from '../pages/serving/serving';
+import { ShoppingPage } from '../pages/shopping/shopping';
+import { HappyPage } from '../pages/happy/happy';
+import { StorePage } from '../pages/store/store';
+import { ClientInfoPage } from '../pages/client-info/client-info';
+import { PastpurchasesPage } from '../pages/pastpurchases/pastpurchases';
+import { ClientNotesPage } from '../pages/client-notes/client-notes';
 import { Configuration } from '../app/BL/Configuraion';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -26,11 +31,16 @@ import { CommonModule } from '@angular/common';
     AboutPage,
     ContactPage,
     HomePage,
-    QueuePage,
-    StorePage,
-    SelectClientPage,
     TabsPage,
     LoginPage,
+    WaitingPage,
+    ServingPage,
+    ShoppingPage,
+    HappyPage,
+    StorePage,
+    ClientInfoPage,
+    PastpurchasesPage,
+    ClientNotesPage,
     EmployeesPage
   ],
   imports: [
@@ -44,12 +54,17 @@ import { CommonModule } from '@angular/common';
     AboutPage,
     ContactPage,
     HomePage,
-    QueuePage,
-    StorePage,
-    SelectClientPage,
-    TabsPage,
     LoginPage,
-    EmployeesPage
+    EmployeesPage,
+    TabsPage,
+    WaitingPage,
+    ShoppingPage,
+    ServingPage,
+    HappyPage,
+    StorePage,
+    ClientInfoPage,
+    PastpurchasesPage,
+    ClientNotesPage
   ],
   providers: [
     // {
@@ -60,6 +75,7 @@ import { CommonModule } from '@angular/common';
     Configuration,
     StatusBar,
     SplashScreen,
+    DatePipe,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
