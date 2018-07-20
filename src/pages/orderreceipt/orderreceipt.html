@@ -1,0 +1,92 @@
+<ion-header>
+  <ion-navbar hideBackButton>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
+    <ion-title>Sale</ion-title>
+    <ion-buttons end>
+      <button ion-button>
+        Save
+      </button>
+      <button ion-button>
+        Cancel
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<!-- <ion-header>
+  <ion-navbar hide-tabs hideBackButton>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
+    <ion-title>
+      Customers
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="addNewClick();">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header> -->
+
+<ion-content padding>
+  <ion-list class="main">
+    <!-- <ion-list-header>
+      Receipt
+    </ion-list-header> -->
+
+    <ion-item no-lines>
+      <h1 class="itemLeft">Receipt</h1>
+      <h3 class="itemRight">USD</h3>
+    </ion-item>
+
+    <ion-item no-lines class="itemPading">
+      <h4 class="itemLeft">Sale</h4>
+      <h4 class="itemRight">120.00</h4>
+    </ion-item>
+
+    <ion-item no-lines class="itemPading">
+      <h4 class="itemLeft">Tax</h4>
+      <h4 class="itemRight">-2</h4>
+    </ion-item>
+
+    <ion-item no-lines class="itemPading">
+      <h4 class="itemLeft">Subtotal</h4>
+      <h4 class="itemRight">{{subTotal}}</h4>
+    </ion-item>
+
+    <ion-item no-lines class="inputClass itemPading">
+      <ion-label class="itemLeft" style="width:50%;color:blue">Discount</ion-label>
+      <ion-input type="number" placeholder="0.00" [(ngModel)]="discount" class="itemRight" style="color:blue" (ionChange)="calcTotal()"></ion-input>
+      <!-- <input type="text" > -->
+    </ion-item>
+
+    <hr>
+    <ion-item no-lines>
+      <h4 class="itemLeft">Total</h4>
+      <h4 class="itemRight">{{total}}</h4>
+    </ion-item>
+    <hr>
+
+    <ion-item no-lines class="inputClass itemPading">
+      <ion-label class="itemLeft" style="width:50%;color:seagreen">Received</ion-label>
+      <ion-input placeholder="0.00" type="number" [(ngModel)]="received" class="itemRight" style="color:seagreen" (ionChange)="calcChange()"></ion-input>
+    </ion-item>
+
+
+    <ion-item no-lines>
+      <h4 class="itemLeft">Change</h4>
+      <h4 class="itemRight">{{change}}</h4>
+    </ion-item>
+    <hr>
+
+    <ion-item no-lines>
+      <h4 class="itemLeft">Status</h4>
+      <h2 class="itemRight" style="color:red">{{status}}</h2>
+    </ion-item>
+
+  </ion-list>
+</ion-content>

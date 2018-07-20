@@ -1,3 +1,20 @@
-page-shopping {
-
+#itemHead h2,
+#itemHead p {
+    display: inline;
 }
+
+.btnStyle{
+    // padding:50px 35px 40px 35px;
+    padding-top: 50px;
+    padding-bottom: 40px;
+    width: 100%
+}
+
+.btnIconStyle{
+    font-size:35px !important;
+}
+
+.btnPStyle{
+    font-size:18px;
+}
+

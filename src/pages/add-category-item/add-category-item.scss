@@ -1,0 +1,40 @@
+#hide input[type=file] {
+    display:none;
+    margin:10px;
+    }
+    #hide input[type=file] + label {
+    display:inline-block;
+    margin:20px;
+    padding: 4px 32px;
+    background-color: #FFFFFF;
+    border:solid 1px #666F77;
+    border-radius: 6px;
+    color:#666F77;
+    }
+    #hide input[type=file]:active + label {
+    background-image: none;
+    background-color:#2D6C7A;
+    color:#FFFFFF;
+    }
+
+    // .itemScan .button-inner{
+    //     padding: 8px;
+    //     color:white;
+    // }
+
+    .camIcon
+    {
+        font-size:30px; 
+    ////color:darkgoldenrod
+    }
+
+    .btnScan{
+        padding-right:10px !important; 
+        //background-color:darkgoldenrod
+    }
+    
+    .imgSize
+    {
+        height:150px;
+        width:150px;
+    }

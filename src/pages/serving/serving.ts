@@ -4,7 +4,7 @@ import { ClientInfoPage } from '../client-info/client-info';
 import { PastpurchasesPage } from '../pastpurchases/pastpurchases';
 import { ClientNotesPage } from '../client-notes/client-notes';
 import { ClientID } from '../../app/BL/ClientID';
-import { ClientPurchases } from '../../app/BL/ClientPurchases';
+//import { ClientPurchases } from '../../app/BL/ClientPurchases';
 
 @IonicPage()
 @Component({

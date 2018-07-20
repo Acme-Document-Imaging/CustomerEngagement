@@ -1,17 +1,14 @@
 <!-- <ion-header>
-
   <ion-navbar>
     <ion-title>Select Client</ion-title>
   </ion-navbar>
-
 </ion-header> -->
 
 
 <ion-content padding>
   <ion-list>
 
-    <ion-item style="margin-top: 10%;">
-      <!-- <ion-item style="margin-top: 4%"> -->
+    <ion-item style="margin-top: 12%;">
       <ion-label stacked>First Name</ion-label>
       <ion-input type="text" value="{{client?.FirstName}}" [readonly]="!userSessionStarted"></ion-input>
     </ion-item>
@@ -23,9 +20,8 @@
 
     <ion-item>
       <ion-label stacked>Birthdate</ion-label>
-      <!-- <ion-input type="text" [(ngModel)]="client.BirthDate" value="{{client?.BirthDate | date: MM/dd/yyyy  }}"></ion-input> -->
-      <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="client.BirthDate"></ion-datetime>
-
+      <!-- <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="client.BirthDate"></ion-datetime> -->
+      <ion-input type="text" [ngModel]="client.BirthDate | date: 'MM/dd/yyyy' " [readonly]="!userSessionStarted" value="{{ client?.BirthDate  }}"></ion-input>
     </ion-item>
 
     <ion-item>
@@ -40,8 +36,8 @@
 
     <ion-item>
       <ion-label stacked>Last Purchase Date</ion-label>
-      <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="client.LastPurchaseDate"></ion-datetime>
-        <!-- <ion-input type="text" [(ngModel)]="client.LastPurchaseDate" value="{{client?.LastPurchaseDate}}" [readonly]="!userSessionStarted"></ion-input> -->
+      <!-- <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="client.LastPurchaseDate"></ion-datetime> -->
+      <ion-input type="text" [ngModel]="client.LastPurchaseDate | date: 'MM/dd/yyyy' " [readonly]="!userSessionStarted" value="{{ client?.LastPurchaseDate  }}"></ion-input>
     </ion-item>
 
     <ion-item>
@@ -61,8 +57,8 @@
 
     <ion-item>
       <ion-label stacked>Last Visit Date</ion-label>
-      <!-- <ion-input type="text" [(ngModel)]="client.LastCheckInDate" value="{{client?.LastCheckInDate}}" [readonly]="!userSessionStarted"></ion-input> -->
-      <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="client.LastCheckInDate"></ion-datetime>
+      <!-- <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="client.LastCheckInDate"></ion-datetime> -->
+      <ion-input type="text" [ngModel]="client.LastCheckInDate | date: 'MM/dd/yyyy' " [readonly]="!userSessionStarted" value="{{ client?.LastCheckInDate  }}"></ion-input>
     </ion-item>
 
     <ion-item>

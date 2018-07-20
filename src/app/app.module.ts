@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { Http } from '@angular/http';
 
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
@@ -15,15 +14,28 @@ import { WaitingPage } from '../pages/waiting/waiting';
 import { ServingPage } from '../pages/serving/serving';
 import { ShoppingPage } from '../pages/shopping/shopping';
 import { HappyPage } from '../pages/happy/happy';
-import { StorePage } from '../pages/store/store';
 import { ClientInfoPage } from '../pages/client-info/client-info';
 import { PastpurchasesPage } from '../pages/pastpurchases/pastpurchases';
 import { ClientNotesPage } from '../pages/client-notes/client-notes';
 import { Configuration } from '../app/BL/Configuraion';
+import { TestPage } from '../pages/test/test';
+
+import { CategoriesPage } from '../pages/categories/categories';
+import { CategoryItemsPage } from '../pages/category-items/category-items';
+import { AddCategoryPage } from '../pages/add-category/add-category';
+import { AddNewOrderPage } from '../pages/add-new-order/add-new-order';
+import { OrderreceiptPage } from '../pages/orderreceipt/orderreceipt';
+import { CustomersPage } from '../pages/customers/customers';
+import { AddCustomerPage } from '../pages/add-customer/add-customer';
+import { AddCategoryItemPage } from '../pages/add-category-item/add-category-item';
+import { BrowsePage } from '../pages/browse/browse';
+import { SearchPage } from '../pages/search/search';
+import { CustomersmodalPage } from '../pages/customersmodal/customersmodal';
+import { PastordersPage } from '../pages/pastorders/pastorders';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { CommonModule, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -33,15 +45,26 @@ import { CommonModule, DatePipe } from '@angular/common';
     HomePage,
     TabsPage,
     LoginPage,
+    EmployeesPage,
     WaitingPage,
     ServingPage,
     ShoppingPage,
     HappyPage,
-    StorePage,
     ClientInfoPage,
     PastpurchasesPage,
     ClientNotesPage,
-    EmployeesPage
+    CategoriesPage,
+    CategoryItemsPage,
+    AddCategoryPage,
+    AddCategoryItemPage,
+    AddNewOrderPage,
+    OrderreceiptPage,
+    CustomersPage,
+    AddCustomerPage,
+    BrowsePage,
+    SearchPage,
+    CustomersmodalPage,
+    PastordersPage
   ],
   imports: [
     BrowserModule,
@@ -51,6 +74,7 @@ import { CommonModule, DatePipe } from '@angular/common';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    AddCustomerPage,
     AboutPage,
     ContactPage,
     HomePage,
@@ -61,10 +85,19 @@ import { CommonModule, DatePipe } from '@angular/common';
     ShoppingPage,
     ServingPage,
     HappyPage,
-    StorePage,
     ClientInfoPage,
     PastpurchasesPage,
-    ClientNotesPage
+    CategoriesPage,
+    CategoryItemsPage,
+    AddCategoryPage,
+    AddCategoryItemPage,
+    AddNewOrderPage,
+    OrderreceiptPage,
+    CustomersPage,
+    BrowsePage,
+    SearchPage,
+    CustomersmodalPage,
+    PastordersPage
   ],
   providers: [
     // {

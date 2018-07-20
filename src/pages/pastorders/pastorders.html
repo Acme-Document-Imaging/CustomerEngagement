@@ -1,0 +1,199 @@
+<ion-header>
+  <ion-navbar hideBackButton>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
+    <ion-title>
+      Past Orders
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="addNewClick();">
+        <ion-icon name="add-circle" class="addIcon"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <!-- <button ion-button icon-right (click)="picker.open()">
+    <ion-datetime #picker pickerFormat="DD MMMM YYYY" [min]="datePickerMin" [(ngModel)]="datePicker" (ionChange)="changeDate()"></ion-datetime>
+    <ion-icon name="calendar"></ion-icon>
+  </button> -->
+  <ion-row>
+    <ion-col col-4>
+      <button (click)="picker.open()" class="btnBack">
+        <ion-datetime #picker pickerFormat="DD-MM-YYYY" [min]="datePickerMin" [(ngModel)]="fromDate" class="dpstyle" (ionChange)="changeFromDate($event)"></ion-datetime>
+        <!-- <ion-icon name="calendar"></ion-icon> -->
+      </button>
+    </ion-col>
+
+    <ion-col col-2>
+      <p style="text-align:center">To</p>
+    </ion-col>
+
+    <ion-col col-4>
+      <!-- <button ion-button icon-right (click)="picker.open()">
+        <ion-datetime #picker pickerFormat="DD MMMM YYYY" [min]="datePickerMin" [(ngModel)]="datePicker" (ionChange)="changeDate($event)"></ion-datetime>
+        <ion-icon name="calendar"></ion-icon>
+      </button> -->
+      <button (click)="picker.open()" class="btnBack">
+        <ion-datetime #picker pickerFormat="DD-MM-YYYY" [min]="datePickerMin" [(ngModel)]="toDate" (ionChange)="changeToDate($event)"
+          class="dpstyle"></ion-datetime>
+        <!-- <ion-icon name="calendar"></ion-icon> -->
+      </button>
+    </ion-col>
+    <ion-col col-2>
+      <button class="btnSearch">
+        <p>
+          <ion-icon name="search"></ion-icon>
+        </p>
+      </button>
+    </ion-col>
+  </ion-row>
+
+  <ion-list>
+    <ion-item>
+      <div id="orderHead" style="background-color:lightblue">
+        <h3 style="float: left;">Invoice
+          <br> # 1 </h3>
+        <p style="float: right;text-align:right">Date: 07/01/2018
+          <br> Time: 5:12PM </p>
+        <br style="clear:both;" />
+      </div>
+
+      <div id="orderDetail">
+        <ion-row>
+          <ion-col col-1>
+          </ion-col>
+          <ion-col col-7>
+            <h4 style="float: left;">Sale</h4>
+          </ion-col>
+          <ion-col col-4 class="alignRight">
+            <h4>48.00</h4>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col col-1>
+          </ion-col>
+          <ion-col col-7>
+            <h4 style="float: left;">Tax</h4>
+          </ion-col>
+          <ion-col col-4 class="alignRight">
+            <h4>4</h4>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col col-1>
+          </ion-col>
+          <ion-col col-7>
+            <h4 style="float: left;">Subtotal</h4>
+          </ion-col>
+          <ion-col col-4 class="alignRight">
+            <h4>44.00</h4>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col col-1>
+          </ion-col>
+          <ion-col col-7>
+            <h4 style="float: left;">Discount</h4>
+          </ion-col>
+          <ion-col col-4 class="alignRight">
+            <h4 style="color:red">2</h4>
+          </ion-col>
+        </ion-row>
+
+        <ion-row style="background-color:lightgreen">
+          <ion-col col-1>
+          </ion-col>
+          <ion-col col-7>
+            <h4 style="float: left;">Grand Total</h4>
+          </ion-col>
+          <ion-col col-4 class="alignRight">
+            <h4>42.00</h4>
+          </ion-col>
+        </ion-row>
+      </div>
+      <div style="text-align:center;">
+        <h1 style="color:green;">Paid</h1>
+      </div>
+    </ion-item>
+
+    
+    <ion-item>
+      <div id="orderHead" style="background-color:lightblue">
+        <h3 style="float: left;">Invoice
+          <br> # 2 </h3>
+        <p style="float: right;text-align:right">Date: 07/01/2018
+          <br> Time: 5:35PM </p>
+        <br style="clear:both;" />
+      </div>
+
+      <div id="orderDetail">
+        <ion-row>
+          <ion-col col-1>
+          </ion-col>
+          <ion-col col-7>
+            <h4 style="float: left;">Sale</h4>
+          </ion-col>
+          <ion-col col-4 class="alignRight">
+            <h4>45.00</h4>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col col-1>
+          </ion-col>
+          <ion-col col-7>
+            <h4 style="float: left;">Tax</h4>
+          </ion-col>
+          <ion-col col-4 class="alignRight">
+            <h4>3</h4>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col col-1>
+          </ion-col>
+          <ion-col col-7>
+            <h4 style="float: left;">Subtotal</h4>
+          </ion-col>
+          <ion-col col-4 class="alignRight">
+            <h4>42.00</h4>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col col-1>
+          </ion-col>
+          <ion-col col-7>
+            <h4 style="float: left;">Discount</h4>
+          </ion-col>
+          <ion-col col-4 class="alignRight">
+            <h4 style="color:red">2</h4>
+          </ion-col>
+        </ion-row>
+
+        <ion-row style="background-color:lightgreen">
+          <ion-col col-1>
+          </ion-col>
+          <ion-col col-7>
+            <h4 style="float: left;">Grand Total</h4>
+          </ion-col>
+          <ion-col col-4 class="alignRight">
+            <h4>40.00</h4>
+          </ion-col>
+        </ion-row>
+      </div>
+      <div style="text-align:center;">
+        <h1 style="color:red;">UnPaid</h1>
+      </div>
+    </ion-item>
+
+
+  </ion-list>
+
+</ion-content>

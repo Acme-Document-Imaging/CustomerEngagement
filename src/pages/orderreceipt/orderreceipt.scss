@@ -1,0 +1,32 @@
+.inputClass  ion-input {
+    input {
+      text-align: right;
+      /* IF YOU ALSO WANT TO PUSH PLACHEHOLDER TO THE RIGHT USE THE FOLLOWING, IF NOT JUST DELETE THE ::-webkit-input-placeholder*/
+      ::-webkit-input-placeholder {
+        text-align: right;
+      }
+    }
+  }
+
+// .itemHeight{
+//     min-height: 3.9rem !important;
+// }
+
+.itemLeft{
+    float: left;
+}
+
+.itemRight{
+    float: right;
+}
+
+.main .item-block
+{
+    min-height: 2.9rem !important;
+     height: 3.3rem !important;
+}
+
+.itemPading
+{
+    padding-top:10px !important;
+}

@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { CommonModule } from '@angular/common';
-import { TabsPage } from '../tabs/tabs';
 import { EmployeesPage } from '../employees/employees';
 import { Configuration } from '../../app/BL/Configuraion';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
@@ -10,8 +8,7 @@ import 'rxjs/add/observable/throw';
 import { Observable } from 'rxjs/Observable';
 import { ToastController } from 'ionic-angular';
 import { FormGroup } from '@angular/forms';
-
-import { Validators, FormBuilder, FormControl } from '@angular/forms';
+import { Validators, FormBuilder } from '@angular/forms';
 
 
 @IonicPage()
@@ -21,27 +18,22 @@ import { Validators, FormBuilder, FormControl } from '@angular/forms';
 })
 export class LoginPage {
 
-  //name;
-
+  loginForm: FormGroup;
   submitAttempt: boolean = false;
 
-  actionUrl: string;
-  // Username: string = "";
-  // Password: string = "";
-  //StoreId: string;
-  //ErrorMessage: string = "";
-
-  loginForm: FormGroup;
+  loginUrl: string;
+  url: string;
+  listEmployees: Employee[] = [];
+  errorMsg: string = "";
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private http: HttpClient
     , private _configuration: Configuration, public toastCtrl: ToastController
     , public formBuilder: FormBuilder) {
 
-    this.actionUrl = this._configuration.Url;
+    this.loginUrl = this._configuration.Url;
+    this.url = _configuration.ApiUrl;
 
-
-    //     //this.name = new FormControl('Dayana', Validators.required)
-
+    //Create Form Using FormBuilder
     this.loginForm = formBuilder.group({
       UserName: ['', Validators.required],
       Password: ['']
@@ -50,17 +42,15 @@ export class LoginPage {
   }
 
   ionViewDidLoad() {
-    debugger;
+    //debugger;
     //console.log('ionViewDidLoad LoginPage');
   }
 
-  //Login Button Click
+  //Function Login Button Click
   loginClick() {
     debugger;
     if (!this.loginForm.valid) {
       this.submitAttempt = true;
-      console.log("not valid");
-      //this.signupSlider.slideTo(0);
     }
 
     var uName = this.loginForm.value['UserName'];
@@ -70,25 +60,24 @@ export class LoginPage {
       this.submitAttempt = false
       let urlSearchParams = new URLSearchParams();
       urlSearchParams.append('username', uName);
-      urlSearchParams.append('password', '');
+      urlSearchParams.append('password', pass);
       urlSearchParams.append('grant_type', 'password');
       let body = urlSearchParams.toString();
 
       // API Call Login
       try {
-        this.http.post(this.actionUrl + "/Token",
+        this.http.post(this.loginUrl + "/Token",
           body,
           {
             headers: new HttpHeaders({
               'Content-Type': 'application/x-www-form-urlencoded'
             })
           })
-          .catch(this.handleError)
-
+          //.catch(this.handleError)
           .subscribe(
             res => {
               //Success
-              debugger;
+              //debugger;
               const loginResponseObj = <LoginResponse>res;
               const access_token = loginResponseObj.access_token;
 
@@ -98,36 +87,98 @@ export class LoginPage {
               //Clear Selected Employee or any current client from configuratoin
               this._configuration.SelectedEmpID = null;
               this._configuration.clientID = null;
-              var UserName = loginResponseObj.userName;
 
-              //Redirect to Employees Page
-              this.navCtrl.push(EmployeesPage);
-            }, error => {
-              debugger
-              //var errrr = <HttpErrorResponse>error;
-              console.log(JSON.stringify(error));
-              //var err = JSON.stringify(error)
-              //this.showToastWithCloseButton("Error in login " + error.error_description);
+              //Login success--api call to get employee list
+              try {
+                this.http.get(this.url + "/GetEmployeesList",
+                  {
+                    headers: new HttpHeaders({
+                      'Content-Type': 'sapplication/x-www-form-urlencoded',
+                      'Authorization': 'Bearer ' + access_token
+                    }), withCredentials: true
+                  }
+
+                )
+                  //.catch(this.handleErrorEmployees)
+                  .subscribe((res) => {
+                    //debugger;
+                    var employeesList = <Employee[]>res;
+                    this.listEmployees = employeesList;
+
+                    //Redirect to Employees Page
+                    this.navCtrl.push(EmployeesPage, {
+                      param1: this.listEmployees, param2: this.errorMsg
+                    });
+
+                  }
+                    , (error: HttpErrorResponse) => {
+                      debugger;
+                      //error status == 404 that means client does not exist/save client
+                      if (error.status === 404) {
+                        this.errorMsg = error.status + " " + error.statusText;
+                        this.navCtrl.push(EmployeesPage, {
+                          param1: this.listEmployees, param2: this.errorMsg
+                        });
+                      }
+                      else {
+                        this.errorMsg = error.status + " " + error.statusText;
+                        this.navCtrl.push(EmployeesPage, {
+                          param1: this.listEmployees, param2: this.errorMsg
+                        })
+                      }
+                    }
+                  );
+
+              } catch (Exception) {
+                //debugger;
+                //Notification for Error
+              }
+
             }
-
+            , (error: HttpErrorResponse) => {
+              debugger;
+              //error status == 404 that means action does not exist
+              if (error.status === 404) {
+                this.errorMsg = error.status + " " + error.statusText;
+                this.showToastWithCloseButton(this.errorMsg);
+              }
+              else {
+                this.errorMsg = error.status + " " + error.statusText;
+                this.showToastWithCloseButton(this.errorMsg);
+              }
+            }
           );
       }
       catch (Exception) {
         debugger;
         //Notification for Error
-        //this.ErrorMessage = Exception.ErrorMessage;
-        this.showToastWithCloseButton("Error in login:" + Exception.ErrorMessage);
+        console.log(JSON.stringify(Exception.ErrorMessage));
+        this.showToastWithCloseButton("Error in login: " + Exception.ErrorMessage);
       }
     }
   }
 
   //handle Error Function
   public handleError = (error: HttpErrorResponse) => {
-    // Do messaging and error handling here
+    //debugger;
+    //Do messaging and error handling here
+    const errorObject = <ErroResponse>error.error;
+    console.log(JSON.stringify(errorObject.error_description));
+    this.showToastWithCloseButton("Error in login: " + errorObject.error_description);
+    return Observable.throw(error)
+  }
+
+  //handle Error GetEmployees Function
+  public handleErrorEmployees = (error: HttpErrorResponse) => {
     debugger;
     // Do messaging and error handling here
     const errorObject = <ErroResponse>error.error;
-    this.showToastWithCloseButton("Error in login:" + errorObject.error_description);
+    this.errorMsg = errorObject.error_description;
+    console.log(JSON.stringify(errorObject.error_description));
+    //Redirect to Employees Page
+    this.navCtrl.push(EmployeesPage, {
+      param1: this.listEmployees, param2: this.errorMsg
+    });
     return Observable.throw(error)
   }
 
@@ -154,28 +205,6 @@ export class LoginPage {
   }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-navbar>
+    <!-- <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button> -->
+    <ion-title>
+      New Item
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="btnAddClick();">
+        Save
+      </button>
+      <button ion-button>
+        Cancel
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <img *ngIf="img1" [src]="img1" class="imgSize" />
+      <br>
+      <!-- <input type="file" value="" (change)="fileChange($event)"> -->
+      <div id="hide" class="col-lg-8 col-xs-8">
+        <label class="hand-cursor">
+          <!-- <input type="file" nv-file-select uploader="$ctrl.uploader" /> -->
+          <input type="file" nv-file-select (change)="fileChange($event)" />
+          <ion-icon name="camera"></ion-icon>
+          <span class="photo_text hidden-xs">Add Photo</span>
+        </label>
+      </div>
+    </ion-item>
+
+    <ion-item>
+      <!-- <ion-label fixed>Item Name</ion-label> -->
+      <ion-input type="text" value="" placeholder="Item Name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Select Category</ion-label>
+      <ion-select submitText="Okay" cancelText="Cancel">
+        <ion-option value="DI">Drinks</ion-option>
+        <ion-option value="BI">Bakery Items</ion-option>
+        <ion-option value="SI">Stationery Items</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item >
+      <ion-input placeholder="Barcode" type="text"></ion-input>
+      <button ion-button item-end class="btnScan">Scan</button>
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="number" placeholder="Price"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="number" placeholder="Cost Price"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="number" placeholder="Quantity"></ion-input>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

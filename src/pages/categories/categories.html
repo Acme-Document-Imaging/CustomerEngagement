@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-navbar hide-tabs hideBackButton>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
+    <ion-title>
+      Categories
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="btnAddClick();">
+        <ion-icon name="add-circle" class="addIcon"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-searchbar block [showCancelButton]="shouldShowCancel"> </ion-searchbar>
+
+  <ion-list>
+    <ion-item (click)="loadItems()">
+      <ion-thumbnail item-start>
+        <img src="../assets/imgs/drink.jpg">
+      </ion-thumbnail>
+      <h2>Drinks</h2>
+      <!-- <button ion-button clear item-end>View</button> -->
+    </ion-item>
+    <ion-item (click)="loadItems()">
+      <ion-thumbnail item-start>
+        <img src="../assets/imgs/bakery.jpg">
+      </ion-thumbnail>
+      <h2>Bakery Items</h2>
+    </ion-item>
+    <ion-item (click)="loadItems()">
+      <ion-thumbnail item-start>
+        <img src="../assets/imgs/stationery.jpg">
+      </ion-thumbnail>
+      <h2>Stationery Items</h2>
+    </ion-item>
+  </ion-list>
+</ion-content>

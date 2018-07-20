@@ -1,0 +1,65 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Drink Items</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="btnAddItemClick();">
+        <ion-icon name="add-circle" class="addIcon"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+  <ion-searchbar block [showCancelButton]="shouldShowCancel" placeholder="Item name/ Barcode"> </ion-searchbar>
+  <ion-list>
+    <!-- <button ion-item>
+      <div id="itemHead">
+        <h2>Item Name</h2>
+      </div>
+      <div class="item-note" item-end>
+        <h2>Price</h2>
+      </div>
+    </button> -->
+
+    <ion-item text-wrap *ngFor="let item of items; let i = index">
+      <ion-row>
+        <ion-col col-4>
+          <img src="../assets/imgs/drink.jpg" class="itemImg">
+        </ion-col>
+        <ion-col col-8>
+          <p>
+            The item detail of {{item.title}}
+          </p>
+        </ion-col>
+      </ion-row>
+      <div class="item-note" item-end>
+        Qty: 20
+        <br> Price: $ 30
+      </div>
+    </ion-item>
+
+    <!-- <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
+      <div id="itemHead">
+        <h2>
+          <ion-icon [name]="item.icon" item-start></ion-icon>
+        </h2>
+        <ion-col col-8>
+          <p>
+            <b> The item title is here n also there the detail {{item.title}} </b>
+          </p>
+        </ion-col>
+      </div>
+      <div class="item-note" item-end>
+        Qty: 20
+        <br> Price: $ {{item.price}}
+      </div>
+    </button> -->
+  </ion-list>
+
+  <div *ngIf="selectedItem" padding>
+    You navigated here from
+    <b>{{selectedItem.title}}</b>
+  </div>
+</ion-content>

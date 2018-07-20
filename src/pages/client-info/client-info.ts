@@ -1,10 +1,10 @@
-// import { Component, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef } from '@angular/core';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
-import { Chart } from 'chart.js';
+// import { Chart } from 'chart.js';
 import { Configuration } from '../../app/BL/Configuraion';
 import { ClientID } from '../../app/BL/ClientID';
-import { ClientPurchases } from '../../app/BL/ClientPurchases';
+//import { ClientPurchases } from '../../app/BL/ClientPurchases';
+import { DatePipe } from '@angular/common'
 
 @IonicPage()
 @Component({
@@ -25,7 +25,7 @@ export class ClientInfoPage {
   // barGraph: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams
-    , public events: Events, public _configuratoin: Configuration) {
+    , public events: Events, public _configuratoin: Configuration, public datepipe: DatePipe) {
 
     debugger;
 
@@ -37,16 +37,6 @@ export class ClientInfoPage {
       this.client = paramVal;
       //this.listPurchases = this.client.Purchases;
     }
-
-    // events.subscribe("selectClient", (selectClient) => {
-    //   debugger;
-    //   this.client = selectClient;
-    //   //this.listPurchases = this.client.Purchases;
-    //   console.log("event called in select Client page client = " + this.client);
-
-    //   //this._changeDetectionRef.detectChanges();
-
-    // })
 
     events.subscribe("showClientBasicInfo", (selectClient) => {
       debugger;

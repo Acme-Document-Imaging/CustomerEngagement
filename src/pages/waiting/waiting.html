@@ -14,12 +14,37 @@
   <ion-list>
     <ion-item-sliding *ngFor="let client of listClients">
       <ion-item>
-        <!-- <h2><ion-icon  name="man" class="larger" *ngIf="client?.Gender == 'Undefined' "></ion-icon>
-          <ion-icon name="man" class="larger" *ngIf="client?.Gender == 'Male' "></ion-icon>
+        <!-- <div id="containerIntro">
+          <h1>Headline</h1>
+          <p>And here the text right after...</p>
+        </div> -->
+
+        <div id="container">
+          <h1>
+            <ion-icon  name="man" class="larger" *ngIf="client?.Gender == 'Undefined' "></ion-icon>
+          </h1>
+          <h1>
+            <ion-icon name="man" class="larger" *ngIf="client?.Gender == 'Male' "></ion-icon>
+          </h1>
+          <h1>
             <ion-icon name="woman" class="larger" *ngIf="client?.Gender == 'Female' "></ion-icon>
-              ({{client?.FirstName}}) </h2> -->
+          </h1>
+          <h2>({{client?.FirstName}})</h2>
+          <p>** {{client?.Gender.substring(0,1)}} {{client?.Age}} {{client.Height}} </p>
+          <h2>{{client?.CheckinTimeMinutes}}</h2>
+        </div>
 
+        <div>
+          <p>
+            <b>LVD:</b> {{client?.LastCheckInDate | date: 'MM/dd/yyyy' }}
+            <b>LPD:</b> {{client?.LastPurchaseDate | date: 'MM/dd/yyyy'}} </p>
+          <p>
+            <b>LPA:</b>${{client?.LastPurchaseAmount}}
+            <b>APA:</b> ${{client?.AvgPurchaseAmount}}
+            <b>CSD:</b> {{client?.CustomerSinceDate | date: 'MM/dd/yyyy'}}</p>
+        </div>
 
+        <!-- 
         <p>
           <b>
             <ion-icon  name="man" class="larger" *ngIf="client?.Gender == 'Undefined' "></ion-icon>
@@ -27,7 +52,7 @@
               <ion-icon name="woman" class="larger" *ngIf="client?.Gender == 'Female' "></ion-icon>
                 ({{client?.FirstName}})</b>  ** {{client?.Gender.substring(0,1)}} {{client?.Age}} {{client.Height}} <b> {{client?.CheckinTimeMinutes}}</b></p>
         <p>LVD: {{client?.LastCheckInDate | date: 'MM/dd/yyyy' }} LPD: {{client?.LastPurchaseDate | date: 'MM/dd/yyyy'}} </p>
-        <p>LPA: ${{client?.LastPurchaseAmount}} APA: ${{client?.AvgPurchaseAmount}} CSD: {{client?.CustomerSinceDate | date: 'MM/dd/yyyy'}}</p>
+        <p>LPA: ${{client?.LastPurchaseAmount}} APA: ${{client?.AvgPurchaseAmount}} CSD: {{client?.CustomerSinceDate | date: 'MM/dd/yyyy'}}</p> -->
 
 
       </ion-item>

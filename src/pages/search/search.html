@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Search Item</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <ion-icon name="md-close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-row>
+    <ion-col col-12>
+      <ion-searchbar [showCancelButton]="shouldShowCancel"> </ion-searchbar>
+    </ion-col>
+  </ion-row>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Categories</ion-label>
+      <ion-select>
+        <ion-option value="f">Drink</ion-option>
+        <ion-option value="m">Bakery</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+
+    <button ion-item>
+      <div id="itemHead">
+        <h2>Item Name</h2>
+      </div>
+      <div class="item-note" item-end>
+        <h2>Price</h2>
+      </div>
+    </button>
+
+    <button ion-item>
+      <div id="itemHead">
+        <p>
+          <b> Item Number 1 </b>
+        </p>
+      </div>
+      <div class="item-note" item-end>
+        $4.0
+      </div>
+    </button>
+
+    <button ion-item>
+      <div id="itemHead">
+        <p>
+          <b> Item Number 2 </b>
+        </p>
+      </div>
+      <div class="item-note" item-end>
+        $6.0
+      </div>
+    </button>
+
+    <button ion-item>
+      <div id="itemHead">
+        <p>
+          <b> Item Number 3 </b>
+        </p>
+      </div>
+      <div class="item-note" item-end>
+        $7.0
+      </div>
+    </button>
+
+    <button ion-item>
+      <div id="itemHead">
+        <p>
+          <b> Item Number 4 </b>
+        </p>
+      </div>
+      <div class="item-note" item-end>
+        $9.0
+      </div>
+    </button>
+
+  </ion-list>
+</ion-content>

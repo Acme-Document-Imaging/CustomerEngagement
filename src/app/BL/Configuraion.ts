@@ -10,4 +10,5 @@ export class Configuration {
     public Token = "";
     public SelectedEmpID;
     public clientID: ClientID;
+    public listClients: Employee[];
 }

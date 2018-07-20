@@ -5,8 +5,8 @@
   <ion-tab [root]="tab3Root" [rootParams]="paramSelect" tabTitle="Select" tabIcon="add-circle"></ion-tab> -->
 
 
-  <ion-tab [root]="tab1Root" tabTitle="Waiting" tabIcon="timer" outline></ion-tab>
-  <ion-tab [root]="tab2Root" tabTitle="Shopping" tabIcon="cart"></ion-tab>
+  <ion-tab [root]="tab1Root" tabTitle="Waiting" [rootParams]="paramListWaiting" tabIcon="timer" outline></ion-tab>
+  <ion-tab [root]="tab2Root" tabTitle="Shopping" tabIcon="cart" tabsHideOnSubPages="true"></ion-tab>
   <ion-tab [root]="tab3Root" tabTitle="Serving" [rootParams]="paramClientInfo" tabIcon="person"></ion-tab>
   <ion-tab [root]="tab4Root" tabTitle="Happy" tabIcon="heart"></ion-tab>
 
