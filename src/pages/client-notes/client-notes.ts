@@ -1,13 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the ClientNotesPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-client-notes',
@@ -16,6 +9,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class ClientNotesPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+
+    debugger;
+
   }
 
   ionViewDidLoad() {

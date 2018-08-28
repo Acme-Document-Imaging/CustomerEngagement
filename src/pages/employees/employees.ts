@@ -81,13 +81,17 @@ export class EmployeesPage {
               this.listClients = <ClientID[]>res;
 
               this.submitAttempt = false;
-              this.navCtrl.push(TabsPage, { param1: this.listClients, param2: this.errorMSG });
+              //Put list Clients or error Message in Configuration
+              this._configuration.listClientsWaiting = this.listClients;
+              this._configuration.errorMsgWaiting = this.errorMSG;
+
+              this.navCtrl.push(TabsPage, { param1: this.listClients, param2: this.errorMSG, target:"tabWaiting" });
               this._configuration.SelectedEmpID = this.selectedEmployee;
             }
             , (error: HttpErrorResponse) => {
               //error status == 404 that means action does not exist
               this.errorMSG = error.status + " " + error.statusText;
-              this.navCtrl.push(TabsPage, { param1: this.listClients, param2: this.errorMSG });
+              this.navCtrl.push(TabsPage, { param1: this.listClients, param2: this.errorMSG, target:"tabWaiting" });
             }
           );
       }

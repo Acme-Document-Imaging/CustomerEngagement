@@ -1,11 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Nav, Tabs, Events, ModalController } from 'ionic-angular';
-import { HomePage } from '../home/home';
-import { AboutPage } from '../about/about';
-import { ContactPage } from '../contact/contact';
+import { IonicPage, NavController, NavParams, Tabs, Events, ModalController } from 'ionic-angular';
+// import { HomePage } from '../home/home';
+// import { AboutPage } from '../about/about';
+// import { ContactPage } from '../contact/contact';
 import { MenuController } from 'ionic-angular';
 import { AddNewOrderPage } from '../add-new-order/add-new-order';
-import { BrowsePage } from '../browse/browse';
 import { SearchPage } from '../search/search';
 import { CustomersmodalPage } from '../customersmodal/customersmodal';
 import { CustomersPage } from '../customers/customers';
@@ -71,11 +70,6 @@ export class ShoppingPage {
     this.navCtrl.push(AddNewOrderPage);
   }
 
-  openModalBrowse(characterNum) {
-
-    let modal = this.modalCtrl.create(BrowsePage, characterNum);
-    modal.present();
-  }
 
   openModalSearch(characterNum) {
 

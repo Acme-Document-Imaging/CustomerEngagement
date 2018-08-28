@@ -36,25 +36,40 @@ export class WaitingPage {
     , private http: HttpClient, public toastCtrl: ToastController
     , public datepipe: DatePipe) {
 
+    debugger;
+
     this.token = _configuration.Token;
     this.url = _configuration.ApiUrl;
 
-    debugger;
-
-    this.listClients = navParams.get("param1");
-    this.errorMsg = navParams.get("param2");
-    var param3 = navParams.get("param3");
-
-    if (param3 == "" || param3 == null) {
-      if (this.listClients == null || this.listClients.length <= 0) {
-        if (this.errorMsg != null && this.errorMsg != "" && this.errorMsg != undefined) {
-          this.showToastWithCloseButton("Error loading Waiting Queue! " + this.errorMsg);
-        }
-        else {
-          this.showToastWithCloseButton("Error loading Waiting Queue!");
-        }
-      }
+    if (_configuration.listClientsWaiting != null && _configuration.listClientsWaiting.length > 0) {
+      this.listClients = _configuration.listClientsWaiting;
     }
+    else if(_configuration.errorMsgWaiting != null && _configuration.errorMsgWaiting != undefined)
+    {
+      this.showToastWithCloseButton("Error loading Waiting Queue! " + this.errorMsg);
+    }
+    else
+    {
+      this.showToastWithCloseButton("Error loading Waiting Queue! " + this.errorMsg);
+    }
+
+    // if (this.listClients == null || this.listClients.length <= 0) {
+    //   this.listClients = navParams.get("param1");
+    //   this.errorMsg = navParams.get("param2");
+    // }
+
+    //var param3 = navParams.get("param3");
+
+    //if (param3 == "" || param3 == null) {
+    // if (this.listClients == null || this.listClients.length <= 0) {
+    //   if (this.errorMsg != null && this.errorMsg != "" && this.errorMsg != undefined) {
+    //     this.showToastWithCloseButton("Error loading Waiting Queue! " + this.errorMsg);
+    //   }
+    //   else {
+    //     this.showToastWithCloseButton("Error loading Waiting Queue!");
+    //   }
+    // }
+    // //}
 
   }
 

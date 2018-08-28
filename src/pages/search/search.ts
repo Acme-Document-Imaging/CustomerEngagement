@@ -12,7 +12,7 @@ export class SearchPage {
   constructor(public navCtrl: NavController, public navParams: NavParams
     , public platform: Platform, public viewCtrl: ViewController) {
 
-    var navParameter = navParams.get('charNum');
+    //var navParameter = navParams.get('charNum');
 
   }
 

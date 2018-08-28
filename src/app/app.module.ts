@@ -18,7 +18,7 @@ import { ClientInfoPage } from '../pages/client-info/client-info';
 import { PastpurchasesPage } from '../pages/pastpurchases/pastpurchases';
 import { ClientNotesPage } from '../pages/client-notes/client-notes';
 import { Configuration } from '../app/BL/Configuraion';
-import { TestPage } from '../pages/test/test';
+// import { TestPage } from '../pages/test/test';
 
 import { CategoriesPage } from '../pages/categories/categories';
 import { CategoryItemsPage } from '../pages/category-items/category-items';
@@ -28,10 +28,14 @@ import { OrderreceiptPage } from '../pages/orderreceipt/orderreceipt';
 import { CustomersPage } from '../pages/customers/customers';
 import { AddCustomerPage } from '../pages/add-customer/add-customer';
 import { AddCategoryItemPage } from '../pages/add-category-item/add-category-item';
-import { BrowsePage } from '../pages/browse/browse';
+// import { BrowsePage } from '../pages/browse/browse';
 import { SearchPage } from '../pages/search/search';
 import { CustomersmodalPage } from '../pages/customersmodal/customersmodal';
 import { PastordersPage } from '../pages/pastorders/pastorders';
+
+// Pipes
+import { SearchPipe  } from '../pipes/search/search';
+import { SortPipe  } from '../pipes/sort/sort';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -61,10 +65,13 @@ import { DatePipe } from '@angular/common';
     OrderreceiptPage,
     CustomersPage,
     AddCustomerPage,
-    BrowsePage,
+    //BrowsePage,
     SearchPage,
     CustomersmodalPage,
-    PastordersPage
+    PastordersPage,
+    // Pipes
+    SearchPipe,
+    SortPipe
   ],
   imports: [
     BrowserModule,
@@ -87,6 +94,7 @@ import { DatePipe } from '@angular/common';
     HappyPage,
     ClientInfoPage,
     PastpurchasesPage,
+    ClientNotesPage,
     CategoriesPage,
     CategoryItemsPage,
     AddCategoryPage,
@@ -94,7 +102,7 @@ import { DatePipe } from '@angular/common';
     AddNewOrderPage,
     OrderreceiptPage,
     CustomersPage,
-    BrowsePage,
+    // BrowsePage,
     SearchPage,
     CustomersmodalPage,
     PastordersPage

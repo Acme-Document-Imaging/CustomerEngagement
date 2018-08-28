@@ -20,7 +20,30 @@
 
 <ion-content padding>
   <ion-row>
-    <ion-searchbar block [showCancelButton]="shouldShowCancel"> </ion-searchbar>
+    <ion-searchbar block [showCancelButton]="shouldShowCancel" [(ngModel)]="searchQuery" (ionInput)="searchItems($event)"> </ion-searchbar>
+
+    <!-- The list shown as search bar-->
+    <ion-list>
+      <ion-item text-wrap *ngFor="let item of items; let i = index" (click)="selectItem(i)">
+        <ion-row>
+          <ion-col col-4>
+            <img src="../assets/imgs/drink.jpg" class="itemImg">
+          </ion-col>
+          <ion-col col-8>
+            <p>
+              {{item.title}}
+            </p>
+            <p>
+              Short detail of {{item.title}}
+            </p>
+          </ion-col>
+        </ion-row>
+        <div class="item-note" item-end>
+          Price: ${{item.price}}
+        </div>
+      </ion-item>
+    </ion-list>
+
   </ion-row>
 
   <ion-row>
@@ -38,11 +61,11 @@
   </ion-row>
 
   <!-- <button ion-button round outline (click)="openModalCustomers()" color="darkcyan" style="color:darkcyan !important">Add Customer</button> -->
-  
+
 
   <ion-row>
     <ion-col col-6>
-        <button ion-button round (click)="btnAddCustomerClick()" style="background-color:darkcyan !important;color:white">Add Customer</button>
+      <button ion-button round (click)="btnAddCustomerClick()" style="background-color:darkcyan !important;color:white">Add Customer</button>
     </ion-col>
 
     <ion-col col-6 style="text-align:right;padding-top:6%;">
@@ -53,14 +76,15 @@
 
   <ion-list>
     <ion-item>
+      <!-- Heading div start -->
       <div id="itemHead" style="color:darkcyan;">
         <ion-row>
-          <ion-col col-6>
+          <ion-col col-5>
             <h2 style="float: left;">Item</h2>
           </ion-col>
           <ion-col col-1>
           </ion-col>
-          <ion-col col-1 style="text-align: right;">
+          <ion-col col-2 style="text-align: right;">
             <h2>Qty</h2>
           </ion-col>
           <ion-col col-1>
@@ -70,152 +94,40 @@
           </ion-col>
         </ion-row>
       </div>
+      <!-- Heading div end -->
 
       <div id="orderDetail">
-        <ion-row>
-          <ion-col col-6>
-            <h3 style="float: left;">Eggs</h3>
-          </ion-col>
-          <ion-col col-1>
-            <button class="button button-sm icon1BtnCustom" (click)="increaseQuantity()">
-              <ion-icon name="add-circle"></ion-icon>
-            </button>
-          </ion-col>
-          <ion-col col-1>
-            <p (click)="editQuantity(itemQuantity)" style="text-align:right;">{{itemQuantity}}</p>
-          </ion-col>
-          <ion-col col-1>
-            <button class="button button-sm" (click)="decreaseQuantity()" style="background-color:transparent;vertical-align:top;padding-left:7px !important;;">
-              <ion-icon name="remove-circle"></ion-icon>
-            </button>
-          </ion-col>
 
-          <ion-col col-3>
-            <p style="text-align:right;">${{price}}</p>
-          </ion-col>
-        </ion-row>
-        <hr>
-        <ion-row>
-          <ion-col col-6>
-            <h3 style="float: left;">Bread</h3>
-          </ion-col>
-          <ion-col col-1>
-            <button class="button button-sm icon1BtnCustom" (click)="increaseQuantity()">
-              <ion-icon name="add-circle"></ion-icon>
-            </button>
-          </ion-col>
-          <ion-col col-1>
-            <p style="text-align:center;">3</p>
-          </ion-col>
-          <ion-col col-1>
-            <button class="button button-sm icon2BtnCustom" (click)="decreaseQuantity()">
-              <ion-icon name="remove-circle"></ion-icon>
-            </button>
-          </ion-col>
+        <div *ngFor="let orderDetailItem of orderDetailItems; let j = index">
 
-          <ion-col col-3>
-            <p style="text-align:right;"> $5</p>
-          </ion-col>
-        </ion-row>
-        <hr>
-        <ion-row>
-          <ion-col col-6>
-            <h3 style="float: left;">Eggs</h3>
-          </ion-col>
-          <ion-col col-1>
-            <button class="button button-sm icon1BtnCustom" (click)="increaseQuantity()">
-              <ion-icon name="add-circle"></ion-icon>
-            </button>
-          </ion-col>
-          <ion-col col-1>
-            <p  style="text-align:center;">4</p>
-          </ion-col>
-          <ion-col col-1>
-            <button class="button button-sm icon2BtnCustom" (click)="decreaseQuantity()">
-              <ion-icon name="remove-circle"></ion-icon>
-            </button>
-          </ion-col>
+          <ion-row text-wrap>
+            <ion-col col-5>
+              <h3 style="float: left;">{{orderDetailItem.itemName}}</h3>
+            </ion-col>
+            <ion-col col-1>
+              <button class="button button-sm" (click)="decreaseQuantity(j)" style="background-color:transparent;vertical-align:top;padding-left:7px !important;;">
+                <ion-icon name="remove-circle"></ion-icon>
+              </button>
+            </ion-col>
+            <ion-col col-2>
+              <p (click)="editQuantity(j, orderDetailItem.qty, orderDetailItem.unitprice)" style="text-align:right;">{{orderDetailItem.qty}}</p>
+            </ion-col>
+            <ion-col col-1>
+              <button class="button button-sm icon1BtnCustom" (click)="increaseQuantity(j)">
+                <ion-icon name="add-circle"></ion-icon>
+              </button>
+            </ion-col>
 
-          <ion-col col-3>
-            <p style="text-align:right;">$11</p>
-          </ion-col>
-        </ion-row>
-        <hr>
+            <ion-col col-3>
+              <p style="text-align:right;">${{orderDetailItem.price}}</p>
+            </ion-col>
 
-        <ion-row>
-          <ion-col col-6>
-            <h3 style="float: left;">Eggs</h3>
-          </ion-col>
-          <ion-col col-1>
-            <button class="button button-sm icon1BtnCustom" (click)="increaseQuantity()">
-              <ion-icon name="add-circle"></ion-icon>
-            </button>
-          </ion-col>
-          <ion-col col-1>
-            <p  style="text-align:center;">5</p>
-          </ion-col>
-          <ion-col col-1>
-            <button class="button button-sm icon2BtnCustom" (click)="decreaseQuantity()">
-              <ion-icon name="remove-circle"></ion-icon>
-            </button>
-          </ion-col>
-          <ion-col col-3>
-            <p style="text-align:right;">$11</p>
-          </ion-col>
-        </ion-row>
-        <hr>
-
-        <ion-row>
-          <ion-col col-6>
-            <h3 style="float: left;">Eggs</h3>
-          </ion-col>
-          <ion-col col-1>
-            <button class="button button-sm icon1BtnCustom" (click)="increaseQuantity()">
-              <ion-icon name="add-circle"></ion-icon>
-            </button>
-          </ion-col>
-          <ion-col col-1>
-            <p  style="text-align:center;">6</p>
-          </ion-col>
-          <ion-col col-1>
-            <button class="button button-sm icon2BtnCustom" (click)="decreaseQuantity()">
-              <ion-icon name="remove-circle"></ion-icon>
-            </button>
-          </ion-col>
-
-          <ion-col col-3>
-            <p style="text-align:right;">$11</p>
-          </ion-col>
-        </ion-row>
-        <hr>
-
-        <ion-row>
-          <ion-col col-6>
-            <h3 style="float: left;">Eggs</h3>
-          </ion-col>
-          <ion-col col-1>
-            <button class="button button-sm icon1BtnCustom" (click)="increaseQuantity()">
-              <ion-icon name="add-circle"></ion-icon>
-            </button>
-          </ion-col>
-          <ion-col col-1>
-            <p  style="text-align:center;">7</p>
-          </ion-col>
-          <ion-col col-1>
-            <button class="button button-sm icon2BtnCustom" (click)="decreaseQuantity()">
-              <ion-icon name="remove-circle"></ion-icon>
-            </button>
-          </ion-col>
-
-          <ion-col col-3>
-            <p style="text-align:right;">$11</p>
-          </ion-col>
-        </ion-row>
+          </ion-row>
+          <hr>
+        </div>
       </div>
-      <hr>
-
+      
     </ion-item>
-
   </ion-list>
 
 </ion-content>
@@ -235,10 +147,10 @@
               <h5>Total</h5>
             </ion-col>
             <ion-col col-2>
-              <h5 style="text-align: center;">18</h5>
+              <h5 style="text-align: center;">{{totalItems}}</h5>
             </ion-col>
             <ion-col col-3>
-              <h5 style="text-align: right;">$19</h5>
+              <h5 style="text-align: right;">${{totalBill}}</h5>
             </ion-col>
             <ion-col col-1></ion-col>
           </ion-row>
@@ -247,132 +159,3 @@
     </ion-list>
   </ion-toolbar>
 </ion-footer>
-
-
-<!-- 
-
-<ion-content padding>
-  <ion-row>
-    <ion-col col-2>
-      <button ion-button icon-only menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-    </ion-col>
-
-    <ion-col col-3>
-      <ion-buttons>
-        <button ion-button icon-only style="margin-top:4px;" color="secondary" (click)="scanClick()">
-          <p style="padding:14px">Scan</p>
-        </button>
-      </ion-buttons>
-    </ion-col>
-
-    <ion-col col-4>
-      <ion-buttons>
-        <button ion-button icon-only style="margin-top:4px;" color="light" (click)="openModalBrowse({charNum: 0})">
-          <p style="padding:16px">Browse</p>
-        </button>
-      </ion-buttons>
-    </ion-col>
-
-    <ion-col col-3>
-      <ion-buttons>
-        <button ion-button icon-only style="margin-top:4px;" color="dark" (click)="openModalSearch({charNum: 0})">
-          <p style="padding:10px">Search</p>
-        </button>
-      </ion-buttons>
-    </ion-col>
-  </ion-row>
-
-  <ion-row>
-    <ion-col col-12>
-      <h1>New Receipt</h1>
-    </ion-col>
-  </ion-row>
-
-  <button ion-button round outline (click)="openModalCustomers()" color="secondary">Add Customer</button>
-
-  <ion-list>
-    <ion-item style="background-color:lightgray;">
-      <div id="itemHead" style="color:#4682B4;">
-        <ion-row>
-          <ion-col col-1>
-          </ion-col>
-          <ion-col col-7>
-            <h2 style="float: left;">Item</h2>
-          </ion-col>
-          <ion-col col-2>
-            <h2 style="float: left;">Qty</h2>
-          </ion-col>
-          <ion-col col-2>
-            <h2 style="float: left;">Price</h2>
-          </ion-col>
-        </ion-row>
-      </div>
-
-      <div id="orderDetail">
-        <ion-row>
-          <ion-col col-1>
-          </ion-col>
-          <ion-col col-7>
-            <h3 style="float: left;">Drink</h3>
-          </ion-col>
-          <ion-col col-2>
-            <p>1</p>
-          </ion-col>
-          <ion-col col-2>
-            <p>$3</p>
-          </ion-col>
-        </ion-row>
-        <hr>
-        <ion-row>
-          <ion-col col-1>
-          </ion-col>
-          <ion-col col-7>
-            <h3 style="float: left;">Bread</h3>
-          </ion-col>
-          <ion-col col-2>
-            <p>5</p>
-          </ion-col>
-          <ion-col col-2>
-            <p>$5</p>
-          </ion-col>
-        </ion-row>
-        <hr>
-        <ion-row>
-          <ion-col col-1>
-          </ion-col>
-          <ion-col col-7>
-            <h3 style="float: left;">Eggs</h3>
-          </ion-col>
-          <ion-col col-2>
-            <p>12</p>
-          </ion-col>
-          <ion-col col-2>
-            <p>$11</p>
-          </ion-col>
-        </ion-row>
-      </div>
-      <hr>
-      <div id="itemHead" style="background-color:steelblue;color:white">
-        <ion-row>
-          <ion-col col-1>
-            <h2></h2>
-          </ion-col>
-          <ion-col col-7>
-            <h2>Total</h2>
-          </ion-col>
-          <ion-col col-2>
-            <h2>18</h2>
-          </ion-col>
-          <ion-col col-2>
-            <h2>$19</h2>
-          </ion-col>
-        </ion-row>
-      </div>
-    </ion-item>
-
-  </ion-list>
-
-
-</ion-content> -->

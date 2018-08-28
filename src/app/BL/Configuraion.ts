@@ -11,4 +11,7 @@ export class Configuration {
     public SelectedEmpID;
     public clientID: ClientID;
     public listClients: Employee[];
+
+    public listClientsWaiting: ClientID[];
+    public errorMsgWaiting: string;
 }

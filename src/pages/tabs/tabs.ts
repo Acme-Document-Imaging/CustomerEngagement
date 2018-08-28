@@ -29,14 +29,50 @@ export class TabsPage {
   //Parameter for Serving ( Client Info)
   paramClientInfo = { clientInfo: ClientID };
   paramSelect = { clientSelect: ClientID };
+  waitingParam1: string ;
+  waitingParam2: string;
   paramListWaiting = { param1: ClientID, param2: "" , param3:""}
+  source: string = "";
 
   constructor(public params: NavParams, public events: Events) {
     debugger;
-    // this.paramListClients = params.get('listClients');
-    this.paramListWaiting.param1 = params.get('param1');
-    this.paramListWaiting.param2 = params.get('param2');
-    this.paramListWaiting.param3 = params.get('data');
+
+    this.source = params.get('data');
+    // if (this.source === "tabShopping") {
+      
+    //   // this.tabs.select(1);
+    //    theTabs.select(1);
+    // }
+
+    // if(this.source === "tabShopping")
+    // {
+    //   this.getSelectedIndex(1);
+    // }
+    // else
+    // {
+    //   this.getSelectedIndex(0);
+    // }
+
+    this.getSelectedIndex();
+
+    //If target is to access waiting page then load these parameters
+    if(this.source == "tabWaiting")
+    {
+
+      if(this.waitingParam1 == null || this.waitingParam1 == "")
+      {
+        this.waitingParam1 = params.get('param1');
+        this.waitingParam2 = params.get('param2');
+
+        this.paramListWaiting.param1 = params.get('param1');
+        this.paramListWaiting.param2 = params.get('param2');
+      }
+
+      
+    }
+
+    
+    //this.paramListWaiting.param3 = params.get('data');
 
     // var selData = params.get('data');
 
@@ -47,6 +83,7 @@ export class TabsPage {
 
     //event subscribed generated from Waiting
     events.subscribe('change-tab', (tab, data) => {
+      debugger;
       this.paramClientInfo.clientInfo = data;
       this.tabs.select(tab);
     });
@@ -56,6 +93,7 @@ export class TabsPage {
     // });
 
     events.subscribe('selectClient', (data) => {
+      debugger;
       this.paramSelect.clientSelect = data;
       //this.tabs[2].tabTitle = data.FirstName;
     });
@@ -65,19 +103,29 @@ export class TabsPage {
     //   debugger;
     //   this.tabs.select(tab);
     // });
-
-
-
   }
 
 
   ionViewDidEnter() {
     debugger;
-    var selData = this.params.get('data');
+    //var target = this.params.get('target');
 
-    if (selData === "tabShopping") {
-      var tabsss = this.tabs;
+    if (this.source === "tabShopping") {
+      
       this.tabs.select(1);
+    }
+  }
+
+  getSelectedIndex()
+  {
+    //return index;
+    if(this.source === "tabShopping")
+    {
+      return 1;
+    }
+    else
+    {
+      return  0;
     }
   }
 

@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, IonicPage, NavController, NavParams, MenuController  } from 'ionic-angular';
 import { HomePage } from '../home/home';
-import { AboutPage } from '../about/about';
-import { ContactPage } from '../contact/contact';
+// import { AboutPage } from '../about/about';
+// import { ContactPage } from '../contact/contact';
 
 @IonicPage()
 @Component({

@@ -12,16 +12,9 @@
 </ion-header>
 
 <ion-content>
-  <ion-searchbar block [showCancelButton]="shouldShowCancel" placeholder="Item name/ Barcode"> </ion-searchbar>
+  <ion-searchbar block [showCancelButton]="shouldShowCancel" (ionInput)="filterItems($event)" placeholder="Item name/ Barcode">
+  </ion-searchbar>
   <ion-list>
-    <!-- <button ion-item>
-      <div id="itemHead">
-        <h2>Item Name</h2>
-      </div>
-      <div class="item-note" item-end>
-        <h2>Price</h2>
-      </div>
-    </button> -->
 
     <ion-item text-wrap *ngFor="let item of items; let i = index">
       <ion-row>
@@ -30,13 +23,16 @@
         </ion-col>
         <ion-col col-8>
           <p>
-            The item detail of {{item.title}}
+            {{item.title}}
+          </p>
+          <p>
+            Short description of {{item.title}}
           </p>
         </ion-col>
       </ion-row>
       <div class="item-note" item-end>
-        Qty: 20
-        <br> Price: $ 30
+        Qty: {{item.qty}}
+        <br> Price: $ {{item.price}}
       </div>
     </ion-item>
 

@@ -1,8 +1,8 @@
 {
   "name": "CustomerEngagement",
-  "app_id": "2ac5cb21",
-  "type": "ionic-angular",
   "integrations": {
     "cordova": {}
-  }
+  },
+  "type": "ionic-angular",
+  "pro_id": "2ac5cb21"
 }
